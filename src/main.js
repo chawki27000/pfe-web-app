@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import VueApollo from 'vue-apollo';
 
 import VueResource from 'vue-resource'
 
@@ -11,8 +13,18 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: 'http://localhost:3000/graphql',
+    transportBatching: true,
+  }),
+});
 
-// Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
+// Install the vue plugin
+Vue.use(VueApollo, {
+  apolloClient,
+});
 
 /* eslint-disable no-new */
 new Vue({
@@ -20,5 +32,5 @@ new Vue({
   router,
   template: '<App/>',
   components: { App },
-  
+
 })

@@ -86,6 +86,7 @@ export default {
             this.alert = false
             console.log(response.data);
             localStorage.setItem('token', response.data.token)
+            localStorage.setItem('username', this.username)
             this.$router.push('/home')
         }
       }, function(response) {
