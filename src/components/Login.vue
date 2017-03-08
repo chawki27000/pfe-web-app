@@ -38,27 +38,25 @@
             </div>
 
           </form>
-
+          {{logout}}
         </div>
       </div>
     </div>
   </div>
 
   <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-          <div class="alert alert-danger" role="alert" v-show="alert">Authentication failed. Username ou password are incorrect </div>
-      </div>
+    <div class="col-md-6 col-md-offset-3">
+      <div class="alert alert-danger" role="alert" v-show="alert">Authentication failed. Username ou password are incorrect </div>
+    </div>
 
   </div>
 </div>
 </template>
 
 <script>
-
 import router from '../router/index'
 
 export default {
-
   data() {
     return {
       username: '',
@@ -79,15 +77,14 @@ export default {
       this.$http.post("http://localhost:3000/auth/login/", obj, {
         emulateJSON: true,
       }).then(function(response) {
-        if (!response.data.success){
-            this.alert = true
-        }
-        else {
-            this.alert = false
-            console.log(response.data);
-            localStorage.setItem('token', response.data.token)
-            localStorage.setItem('username', this.username)
-            this.$router.push('/home')
+        if (!response.data.success) {
+          this.alert = true
+        } else {
+          this.alert = false
+          console.log(response.data);
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('username', this.username)
+          this.$router.push('/home')
         }
       }, function(response) {
         console.log("error : " + JSON.stringify(response));
@@ -99,11 +96,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .login {
-
-    background-color: #80cbc4 !important;
+  background-color: #80cbc4 !important;
 }
+
 .btnsub {
   width: inherit;
 }
