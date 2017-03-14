@@ -94,13 +94,14 @@
 
       <div class="row row2">
           <div class="col-md-2 col-md-offset-5">
-              <a href="#" class="btn btn-success">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
+              <a class="btn btn-success" @click="send">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
           </div>
       </div>
   </div>
 </template>
 
 <script>
+import gql from 'graphql-tag';
 export default {
     data () {
         return {
@@ -111,7 +112,33 @@ export default {
             lev_mother: '',
             address: ''
         }
+    },
+    mounted () {
+        this.$child = this.$resource('child/insert')
+    },
+    methods: {
+      send() {
+        this.$child.save({
+            num: this.age,
+            types: this.types,
+            weight: this.weight,
+            school_mother: this.lev_mother,
+            school_father: this.lev_father,
+            address_parent: this.address,
+        }).then(function (response) {
+            if (response.body.success)
+            {
+                console.log("id : "+response.body.id);
+                localStorage.setItem('child_id', response.body.id)
+                // redirect to complete information
+
+            }
+        }, function(response) {
+            console.log('error : ' + response)
+        })
+      }
     }
+
 }
 </script>
 

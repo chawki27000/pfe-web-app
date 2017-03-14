@@ -13,6 +13,8 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 
+Vue.http.options.root = 'http://localhost:3000/v1'
+
 // Create the apollo client
 const apolloClient = new ApolloClient({
   networkInterface: createNetworkInterface({
