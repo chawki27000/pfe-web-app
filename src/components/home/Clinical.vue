@@ -1,7 +1,6 @@
 <template lang="html">
   <div>
       <div class="row row1">
-
           <div class="col-md-6">
               <form class="form-horizontal">
                   <div class="form-group">

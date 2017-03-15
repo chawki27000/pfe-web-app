@@ -8,10 +8,16 @@
                 </div>
 
                 <ul class="nav navbar-nav">
+                    <!-- Doctor feature -->
                   <li class="active"> <router-link :to="{name: 'Information'}">Information</router-link> </li>
-                  <li> <router-link :to="{name: 'Clinical'}">Clinical</router-link> </li>
-                  <li> <router-link :to="{name: 'Case'}">Case</router-link> </li>
+                      <li v-if="user.role== 'Doctor'"> <router-link :to="{name: 'Clinical'}">Clinical</router-link> </li>
+                      <li v-if="role== 'Doctor'"> <router-link :to="{name: 'Case'}">Case</router-link> </li>
 
+                      <!-- Admin feature -->
+                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'User'}">User</router-link> </li>
+                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'Information'}">Hospital</router-link> </li>
+                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'Information'}">Drug</router-link> </li>
+                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'Information'}">Doctor</router-link> </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -34,8 +40,6 @@ export default {
       token: localStorage.getItem('token'),
       username: localStorage.getItem('username'),
       user: {},
-      doctor: {},
-      hospital: {}
     }
   },
 
@@ -57,37 +61,14 @@ export default {
         }
       }
     },
-
-    doctor: {
-      query: gql`
-          query Doc($id: String!){
-              doctor(id: $id){
-                  speciality
-                  service
-                  work
-              }
-          }`,
-      variables() {
-        return {
-          id: this.user[0]._id
-        }
-      }
-    },
-    hospital: {
-      query: gql`
-            query Hospital($id: String!){
-                hospital(id: $id){
-                    name
-                    address
-                }
-            }`,
-      variables() {
-        return {
-          id: this.doctor[0].work
-        }
-      }
-    }
   },
+
+  computed: {
+      role () {
+          return this.user[0].role
+      }
+  },
+
 
   methods: {
     logout() {

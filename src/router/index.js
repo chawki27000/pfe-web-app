@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Information from '@/components/home/Information'
 import Clinical from '@/components/home/Clinical'
 import Case from '@/components/home/Case'
+import User from '@/components/admin/User'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
               path: '/case',
               name: 'Case',
               component: Case
+          },
+          {
+              path: '/user',
+              name: 'User',
+              component: User
           },
       ]
   },
