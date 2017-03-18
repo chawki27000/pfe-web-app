@@ -10,14 +10,13 @@
                 <ul class="nav navbar-nav">
                     <!-- Doctor feature -->
                   <li class="active"> <router-link :to="{name: 'Information'}">Information</router-link> </li>
-                      <li v-if="user.role== 'Doctor'"> <router-link :to="{name: 'Clinical'}">Clinical</router-link> </li>
-                      <li v-if="role== 'Doctor'"> <router-link :to="{name: 'Case'}">Case</router-link> </li>
+                      <li v-if="user[0].role== 'Doctor'"> <router-link :to="{name: 'Clinical'}">Clinical</router-link> </li>
+                      <li v-if="user[0].role== 'Doctor'"> <router-link :to="{name: 'Case'}">Case</router-link> </li>
 
                       <!-- Admin feature -->
-                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'User'}">User</router-link> </li>
-                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'Information'}">Hospital</router-link> </li>
-                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'Information'}">Drug</router-link> </li>
-                      <li v-if="role == 'Admin'"> <router-link :to="{name: 'Information'}">Doctor</router-link> </li>
+                      <li v-if="user[0].role == 'Admin'"> <router-link :to="{name: 'User'}">User</router-link> </li>
+                      <li v-if="user[0].role == 'Admin'"> <router-link :to="{name: 'Hospital'}">Hospital</router-link> </li>
+                      <li v-if="user[0].role == 'Admin'"> <router-link :to="{name: 'Drug'}">Drug</router-link> </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -62,13 +61,6 @@ export default {
       }
     },
   },
-
-  computed: {
-      role () {
-          return this.user[0].role
-      }
-  },
-
 
   methods: {
     logout() {
