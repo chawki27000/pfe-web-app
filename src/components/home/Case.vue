@@ -7,13 +7,13 @@
 
             <div class="list-group" v-for="child in childs">
                 <a class="list-group-item active">{{child._id}}</a>
+                <a class="list-group-item"><strong>Age : </strong>{{child.age.num}} {{child.age.types}}</a>
                 <a class="list-group-item"><strong>Weight : </strong>{{child.weight}}</a>
                 <a class="list-group-item"><strong>Mother's school level : </strong>{{child.school_mother}}</a>
                 <a class="list-group-item"><strong>Father's school level : </strong>{{child.school_father}}</a>
                 <a class="list-group-item"><strong>Address : </strong>{{child.address_parent}}</a>
           </div>
           </div>
-
       </div>
   </div>
 
@@ -40,6 +40,10 @@ export default {
             query Childs{
                 childs {
                     _id
+                    age {
+                          num
+                          types
+                        }
                     weight
                     school_mother
                     school_father

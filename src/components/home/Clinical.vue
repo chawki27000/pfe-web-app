@@ -91,11 +91,16 @@
           </div>
       </div>
 
-      <div class="row row2">
+      <div class="row row2" v-show="!next">
           <div class="col-md-2 col-md-offset-5">
               <a class="btn btn-success" @click="send">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
           </div>
       </div>
+
+      <div class="row row2" v-show="next">
+          2EME PARTIE
+      </div>
+
   </div>
 </template>
 
@@ -109,32 +114,44 @@ export default {
             weight:0,
             lev_father: '',
             lev_mother: '',
-            address: ''
+            address: '',
+            // behavior variables
+            next: false
         }
     },
-    mounted () {
-        this.$child = this.$resource('child/insert')
-    },
+
     methods: {
       send() {
-        this.$child.save({
-            num: this.age,
-            types: this.types,
-            weight: this.weight,
-            school_mother: this.lev_mother,
-            school_father: this.lev_father,
-            address_parent: this.address,
-        }).then(function (response) {
-            if (response.body.success)
-            {
-                console.log("id : "+response.body.id);
-                localStorage.setItem('child_id', response.body.id)
-                // redirect to complete information
-
-            }
-        }, function(response) {
-            console.log('error : ' + response)
-        })
+          const ag = this.age
+          const ty = this.types
+          const wi = this.weight
+          const sm = this.lev_father
+          const sf = this.lev_mother
+          const ad = this.address
+        this.$apollo.mutate({
+            mutation: gql`
+            mutation($ag: Int!, $ty: String!,$wi: Float!, $sm: String!, $sf: String!, $ad: String){
+              addChild(data:{age:{num: $ag, types: $ty}, weight: $wi, school_mother: $sm, school_father: $sf, address_parent: $ad}){
+                _id
+              }
+          }`,
+          variables: {
+              ag,
+              ty,
+              wi,
+              sm,
+              sf,
+              ad
+          }
+      }).then((response) => {
+          if (response.data.addChild._id) {
+              localStorage.setItem('child_id', response.data.addChild._id)
+              // redirect
+              this.next = true
+          }
+      }).catch((error) => {
+          console.error(error);
+      })
       }
     }
 
