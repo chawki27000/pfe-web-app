@@ -97,8 +97,13 @@
           </div>
       </div>
 
-      <div class="row row2" v-show="next">
-          2EME PARTIE
+      <div class="row row2" v-show="true">
+              <button type="button" class="btn btn-primary col-md-3 col-md-offset-2" @click="stable">
+                  Stable
+              </button>
+              <button type="button" class="btn btn-warning col-md-3 col-md-offset-1" @click="instable">
+                  Instable
+              </button>
       </div>
 
   </div>
@@ -107,53 +112,59 @@
 <script>
 import gql from 'graphql-tag';
 export default {
-    data () {
-        return {
-            age: 0,
-            types: '',
-            weight:0,
-            lev_father: '',
-            lev_mother: '',
-            address: '',
-            // behavior variables
-            next: false
-        }
-    },
+  data() {
+    return {
+      age: 0,
+      types: '',
+      weight: 0,
+      lev_father: '',
+      lev_mother: '',
+      address: '',
+      // behavior variables
+      next: false
+    }
+  },
 
-    methods: {
-      send() {
-          const ag = this.age
-          const ty = this.types
-          const wi = this.weight
-          const sm = this.lev_father
-          const sf = this.lev_mother
-          const ad = this.address
-        this.$apollo.mutate({
-            mutation: gql`
+  methods: {
+    send() {
+      const ag = this.age
+      const ty = this.types
+      const wi = this.weight
+      const sm = this.lev_father
+      const sf = this.lev_mother
+      const ad = this.address
+      this.$apollo.mutate({
+        mutation: gql `
             mutation($ag: Int!, $ty: String!,$wi: Float!, $sm: String!, $sf: String!, $ad: String){
               addChild(data:{age:{num: $ag, types: $ty}, weight: $wi, school_mother: $sm, school_father: $sf, address_parent: $ad}){
                 _id
               }
           }`,
-          variables: {
-              ag,
-              ty,
-              wi,
-              sm,
-              sf,
-              ad
-          }
+        variables: {
+          ag,
+          ty,
+          wi,
+          sm,
+          sf,
+          ad
+        }
       }).then((response) => {
-          if (response.data.addChild._id) {
-              localStorage.setItem('child_id', response.data.addChild._id)
-              // redirect
-              this.next = true
-          }
+        if (response.data.addChild._id) {
+          localStorage.setItem('child_id', response.data.addChild._id)
+          // redirect
+          this.next = true
+        }
       }).catch((error) => {
-          console.error(error);
+        console.error(error);
       })
-      }
+    },
+    stable() {
+        this.$router.push({name: 'Stable'})
+    },
+    instable() {
+        this.$router.push({name: 'Instable'})
     }
+  }
 
 }
 </script>
@@ -166,4 +177,5 @@ export default {
 .row2 {
     margin-top: 3%
 }
+
 </style>

@@ -2,12 +2,20 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+
 import Information from '@/components/home/Information'
 import Clinical from '@/components/home/Clinical'
 import Case from '@/components/home/Case'
+
 import User from '@/components/admin/User'
 import Hospital from '@/components/admin/Hospital'
 import Drug from '@/components/admin/Drug'
+
+import Stable from '@/components/doctor/Stable'
+import Instable from '@/components/doctor/Instable'
+
+import Hemodynamic from '@/components/doctor/instable/Hemodynamic'
+import Pulmonaire from '@/components/doctor/instable/Pulmonaire'
 
 Vue.use(Router)
 
@@ -53,9 +61,30 @@ export default new Router({
               name: 'Drug',
               component: Drug
           },
+          {
+              path: '/stable',
+              name: 'Stable',
+              component: Stable
+          },
+          {
+              path: '/instable',
+              name: 'Instable',
+              component: Instable,
+              children: [
+                  {
+                      path: '/hemodynamic',
+                      path: 'Hemodynamic',
+                      component: Hemodynamic
+                  },
+                  {
+                      path: '/pulmonaire',
+                      path: 'Pulmonaire',
+                      component: Pulmonaire
+                  }
+              ]
+          }
       ]
   },
-
 
   ]
 })
