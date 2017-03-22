@@ -100,13 +100,13 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary col-md-3 col-md-offset-4">Submit</button>
+      <button type="button" class="btn btn-primary col-md-3 col-md-offset-4" @click="submit">Submit</button>
 
     </form>
   </div>
 
   <div class="col-md-6">
-      {{data}}
+    <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong></div>
   </div>
 
 </div>
@@ -114,24 +114,49 @@
 
 <script>
 export default {
-    data () {
-        return {
-            data: {
-                doctor: localStorage.getItem('user_id'),
-                child: localStorage.getItem('child_id'),
-                fr: 0,
-                amplitude: '',
-                spo2: 0,
-                fio2: 0,
-                rythme: '',
-                cyanose: false,
-                sign_lutte: [],
-                sueur: false,
-                bruit: '',
-                toux: ''
-            }
-        }
+  data() {
+    return {
+      data: {
+        doctor: localStorage.getItem('user_id'),
+        child: localStorage.getItem('child_id'),
+        fr: 0,
+        amplitude: '',
+        spo2: 0,
+        fio2: 0,
+        rythme: '',
+        cyanose: false,
+        sign_lutte: [],
+        sueur: false,
+        bruit: '',
+        toux: ''
+      },
+      success: false,
     }
+  },
+  methods: {
+    submit() {
+      var resource = this.$resource('pulmonaire/insert');
+      resource.save({
+        doctor: this.data.doctor,
+        child: this.data.child,
+        fr: this.data.fr,
+        amplitude: this.data.amplitude,
+        spo2: this.data.spo2,
+        fio2: this.data.fio2,
+        rythme: this.data.rythme,
+        cyanose: this.data.cyanose,
+        sign_lutte: this.data.sign_lutte,
+        sueur: this.data.sueur,
+        bruit: this.data.bruit,
+        toux: this.data.toux,
+      }).then(response => {
+        this.success = true
+        console.log(response)
+      }, response => {
+        console.log(response)
+      })
+    }
+  }
 }
 </script>
 
