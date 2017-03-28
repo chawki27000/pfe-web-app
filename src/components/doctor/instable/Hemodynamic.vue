@@ -91,7 +91,11 @@
   </div>
 
   <div class="col-md-6">
-    <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong></div>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Cardiac frequence : </strong>Tachycardie</li>
+      <li class="list-group-item"><strong>TA : </strong>Hypertension systolique</li>
+      <li class="list-group-item"><strong>Temperature : </strong>Normal</li>
+    </ul>
   </div>
 
 </div>

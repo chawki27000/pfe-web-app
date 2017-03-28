@@ -106,7 +106,10 @@
   </div>
 
   <div class="col-md-6">
-    <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong></div>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>FR : </strong>polypnée</li>
+        <li class="list-group-item"><strong>SpO2 : </strong>Good</li>
+      </ul>
   </div>
 
 </div>

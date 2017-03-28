@@ -97,7 +97,7 @@
           </div>
       </div>
 
-      <div class="row row2" v-show="true">
+      <div class="row row2" v-show="next">
               <button type="button" class="btn btn-primary col-md-3 col-md-offset-2" @click="stable">
                   Stable
               </button>
@@ -159,10 +159,14 @@ export default {
       })
     },
     stable() {
-        this.$router.push({name: 'Stable'})
+      this.$router.push({
+        name: 'Stable'
+      })
     },
     instable() {
-        this.$router.push({name: 'Instable'})
+      this.$router.push({
+        name: 'Instable'
+      })
     }
   }
 

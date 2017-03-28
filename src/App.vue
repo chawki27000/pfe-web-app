@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-      <div class="container">
+
           <router-view></router-view>
-      </div>
 
   </div>
 </template>
@@ -14,8 +13,18 @@ export default {
 </script>
 
 <style>
-body {
-    font-family: 'Roboto', sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+html {
+    background-color: #fff;
+    color: #555;
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
 }
 </style>
