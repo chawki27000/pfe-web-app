@@ -8,30 +8,32 @@
   </div>
 
   <div class="row row-btn">
-      <a class="btn-add" data-toggle="modal" data-target="#myModal"><i class="ion-person-add"></i>Add User</a>
+    <a class="btn-add" data-toggle="modal" data-target="#myModal"><i class="ion-person-add"></i>Add User</a>
   </div>
 
   <div class="row">
-      <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>FirstName</th>
-              <th>LastName</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody>
-                  <tr v-for="us in users">
-                    <td>{{us.username}}</td>
-                    <td>{{us.email}}</td>
-                    <td>{{us.firstName}}</td>
-                    <td>{{us.lastName}}</td>
-                    <td>{{us.role}}</td>
-                  </tr>
-          </tbody>
-        </table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>FirstName</th>
+          <th>LastName</th>
+          <th>Role</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="us in users" :key="us._id">
+          <td>{{us.username}}</td>
+          <td>{{us.email}}</td>
+          <td>{{us.firstName}}</td>
+          <td>{{us.lastName}}</td>
+          <td>{{us.role}}</td>
+          <td><a @click="remove(us._id)"><i class="ion-minus-circled"></i></a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- MODAL DECLARATION -->
@@ -45,56 +47,56 @@
           <h4 class="modal-title" id="myModalLabel">Add User</h4>
         </div>
         <div class="modal-body">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" placeholder="Username" v-model="user.username">
-            </div>
-            <div class="form-group">
-              <label for="username">Email</label>
-              <input type="text" class="form-control" placeholder="Email" v-model="user.email">
-            </div>
-            <div class="form-group">
-              <label for="username">First Name</label>
-              <input type="text" class="form-control" placeholder="FirstName" v-model="user.firstName">
-            </div>
-            <div class="form-group">
-              <label for="username">Last Name</label>
-              <input type="text" class="form-control" placeholder="LastName" v-model="user.lastName">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" placeholder="Password" v-model="user.password">
-            </div>
-            <div class="form-group">
-              <label class=" control-label" for="selectbasic">Role</label>
-              <select name="selectbasic" class="form-control" v-model="user.role">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" placeholder="Username" v-model="user.username">
+          </div>
+          <div class="form-group">
+            <label for="username">Email</label>
+            <input type="text" class="form-control" placeholder="Email" v-model="user.email">
+          </div>
+          <div class="form-group">
+            <label for="username">First Name</label>
+            <input type="text" class="form-control" placeholder="FirstName" v-model="user.firstName">
+          </div>
+          <div class="form-group">
+            <label for="username">Last Name</label>
+            <input type="text" class="form-control" placeholder="LastName" v-model="user.lastName">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" placeholder="Password" v-model="user.password">
+          </div>
+          <div class="form-group">
+            <label class=" control-label" for="selectbasic">Role</label>
+            <select name="selectbasic" class="form-control" v-model="user.role">
                   <option value="Doctor">Doctor</option>
                   <option value="Patient">Patient</option>
                   <option value="Admin">Admin</option>
                 </select>
+          </div>
+
+          <div v-if="user.role=='Doctor'">
+            <div class="form-group">
+              <label for="password">Speciality</label>
+              <input type="text" class="form-control" placeholder="Speciality" v-model="doctor.speciality">
+            </div>
+            <div class="form-group">
+              <label for="password">Service</label>
+              <input type="text" class="form-control" placeholder="Service" v-model="doctor.service">
             </div>
 
-            <div v-if="user.role=='Doctor'">
-              <div class="form-group">
-                <label for="password">Speciality</label>
-                <input type="text" class="form-control" placeholder="Speciality" v-model="doctor.speciality">
-              </div>
-              <div class="form-group">
-                <label for="password">Service</label>
-                <input type="text" class="form-control" placeholder="Service" v-model="doctor.service">
-              </div>
-
-              <div class="form-group">
-                <label class=" control-label" for="selectbasic">Hospital</label>
-                <select name="selectbasic" class="form-control" v-model="doctor.work">
+            <div class="form-group">
+              <label class=" control-label" for="selectbasic">Hospital</label>
+              <select name="selectbasic" class="form-control" v-model="doctor.work">
                     <option v-for="h in hospitals" v-bind:value="h._id">{{h.name}}</option>
                   </select>
-              </div>
             </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="send">Submit</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="send">Submit</button>
         </div>
       </div>
     </div>
@@ -159,6 +161,9 @@ export default {
 
   },
   methods: {
+    addArray(obj) {
+      this.users.splice(this.users.length, 0, obj)
+    },
     sendDoc(usid, spec, serv, work) {
       this.$apollo.mutate({
         mutation: gql `
@@ -209,16 +214,44 @@ export default {
             this.sendDoc(response.data.addUser._id, this.doctor.speciality,
               this.doctor.service, this.doctor.work)
           }
+          // add in local array
+          this.addArray({
+            _id: response.data.addUser._id,
+            username: un,
+            email: em,
+            firstName: fn,
+            lastName: ln,
+            role: rl
+          })
         } else {
           this.error = true
         }
       }).catch((error) => {
         console.error(error);
       })
+    },
+    remove(id) {
+      this.$apollo.mutate({
+        mutation: gql `
+          mutation ($id: String!){
+            removeUser(
+              id: $id
+            )
+        }`,
+        variables: {
+          id
+        }
+      }).then((response) => {
+        if (response.data.removeUser) {
+          console.log("VRAI");
+          this.users = this.users.filter(function(obj) {
+            return obj._id !== id
+          })
+        }
+      }).catch((error) => {
+        console.log("FAUX");
+      })
     }
-  },
-  mounted() {
-
   }
 }
 </script>
@@ -250,4 +283,21 @@ export default {
     width: 100%;
     text-align:center;
 }
+
+
+tr td a,
+tr td a:link,
+tr td a:visited {
+    text-decoration: none;
+    font-size: 140%;
+    color: #f44336;
+    transition: color 0.2s;
+}
+
+tr td a:hover,
+tr td a:active {
+    text-decoration: none;
+    color: #ca180b;
+}
+
 </style>
