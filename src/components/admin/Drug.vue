@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
       <div class="alert alert-danger" role="alert" v-show="error"><strong>Error</strong> the user wasn't registered</div>
-      <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong> the user was registered. <br>id: {{id_success}}</div>
+      <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong>it's  was registered. <br>id: {{id_success}}</div>
     </div>
   </div>
 
@@ -20,14 +20,16 @@
           <th>Category</th>
           <th>Format</th>
           <th>Masse</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="d in drugs">
+        <tr v-for="d in drugs" :key="d._id">
           <td>{{d.name}}</td>
           <td>{{d.category}}</td>
           <td>{{d.format}}</td>
           <td>{{d.masse}}</td>
+          <td><a @click="remove(d._id)"><i class="ion-minus-circled"></i></a></td>
         </tr>
       </tbody>
     </table>
@@ -68,7 +70,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="send">Submit</button>
+          <button type="button" class="btn btn-primary"  data-dismiss="modal"@click="send">Submit</button>
         </div>
       </div>
     </div>
@@ -133,6 +135,28 @@ export default {
         }
       }).catch((error) => {
         console.error(error);
+      })
+    },
+    remove(id) {
+      this.$apollo.mutate({
+        mutation: gql `
+        mutation ($id: String!){
+          removeDrug(
+            id: $id
+          )
+      }`,
+        variables: {
+          id
+        }
+      }).then((response) => {
+        if (response.data.removeDrug) {
+          console.log("VRAI");
+          this.drugs = this.drugs.filter(function(obj) {
+            return obj._id !== id
+          })
+        }
+      }).catch((error) => {
+        console.log("FAUX");
       })
     }
   }

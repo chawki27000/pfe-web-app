@@ -21,14 +21,16 @@
           <th>Address</th>
           <th>lat</th>
           <th>lon</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="h in hospitals">
+        <tr v-for="h in hospitals" :key="h._id">
           <td>{{h.name}}</td>
           <td>{{h.address}}</td>
           <td>{{h.coordinates.lat}}</td>
           <td>{{h.coordinates.lon}}</td>
+          <td><a @click="remove(h._id)"><i class="ion-minus-circled"></i></a></td>
         </tr>
       </tbody>
     </table>
@@ -65,7 +67,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="send">Submit</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="send">Submit</button>
         </div>
       </div>
     </div>
@@ -109,6 +111,9 @@ export default {
     }
   },
   methods: {
+    addArray(obj) {
+      this.hospitals.splice(this.hospitals.length, 0, obj)
+    },
     send() {
       const name = this.hospital.name
       const ad = this.hospital.address
@@ -132,11 +137,44 @@ export default {
         if (response.data.addHospital._id) {
           this.success = true
           this.id_success = response.data.addHospital._id
+          // add in local array
+          this.addArray({
+              _id: response.data.addHospital._id,
+              name: name,
+              address: ad,
+              coordinates: {
+                  lat: lat,
+                  lon: lon
+              }
+          })
         } else {
           this.error = true
         }
       }).catch((error) => {
         console.error(error);
+      })
+    },
+    remove(id) {
+
+      this.$apollo.mutate({
+        mutation: gql `
+          mutation ($id: String!){
+            removeHospital(
+              id: $id
+            )
+        }`,
+        variables: {
+          id
+        }
+      }).then((response) => {
+        if (response.data.removeHospital) {
+          console.log("VRAI");
+          this.hospitals = this.hospitals.filter(function(obj) {
+            return obj._id !== id
+          })
+        }
+      }).catch((error) => {
+        console.log("FAUX");
       })
     }
   }
