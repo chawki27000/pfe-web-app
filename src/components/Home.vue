@@ -1,31 +1,72 @@
 <template lang="html">
-    <div>
 
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                  <router-link class="navbar-brand" :to="{name: 'Home'}">Alpha Project</router-link>
-                </div>
+    <div id="wrapper">
 
-                <ul class="nav navbar-nav">
-                    <!-- Doctor feature -->
-                  <li class="active"> <router-link :to="{name: 'Information'}">Information</router-link> </li>
-                      <li v-if="user[0].role== 'Doctor'"> <router-link :to="{name: 'Clinical'}">Clinical</router-link> </li>
-                      <li v-if="user[0].role== 'Doctor'"> <router-link :to="{name: 'Case'}">Case</router-link> </li>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/dash">Alpha Project</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
 
-                      <!-- Admin feature -->
-                      <li v-if="user[0].role == 'Admin'"> <router-link :to="{name: 'User'}">User</router-link> </li>
-                      <li v-if="user[0].role == 'Admin'"> <router-link :to="{name: 'Hospital'}">Hospital</router-link> </li>
-                      <li v-if="user[0].role == 'Admin'"> <router-link :to="{name: 'Drug'}">Drug</router-link> </li>
-                </ul>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user[0].firstName}} {{user[0].lastName}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <router-link :to="{name: 'Information'}"><i class="ion-person"></i> Profile</router-link>
+                        </li>
 
-                <ul class="nav navbar-nav navbar-right">
-                  <li> <a @click="logout">Logout</a> </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a @click="logout" href=""><i class="ion-power"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <!-- Doctor Feature -->
+                    <li v-if="user[0].role== 'Doctor'">
+                        <a href="#/clinical"><i class="ion-ios-pulse-strong"></i>Clinical</a>
+                    </li>
+                    <li v-if="user[0].role== 'Doctor'">
+                        <a href="#/case"><i class="ion-medkit"></i> Case</a>
+                    </li>
+                    <!-- Admin Feature -->
+                    <li v-if="user[0].role == 'Admin'">
+                        <a href="#/user"><i class="ion-person"></i> User</a>
+                    </li>
+                    <li v-if="user[0].role == 'Admin'">
+                        <a href="#/hospital"><i class="ion-ios-medkit"></i> Hospital</a>
+                    </li>
+                    <li v-if="user[0].role == 'Admin'">
+                        <a href="#/drug"><i class="ion-ios-flask"></i> Drug</a>
+                    </li>
+
                 </ul>
             </div>
+            <!-- /.navbar-collapse -->
         </nav>
-        <router-view></router-view>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <router-view></router-view>
+            </div>
+        </div>
+
+
     </div>
+    <!-- /#wrapper -->
+
 </template>
 
 <script>
@@ -42,7 +83,7 @@ export default {
 
   apollo: {
     user: {
-      query: gql`
+      query: gql `
           query User($username: String!){
               user(username: $username){
                 _id
@@ -63,7 +104,12 @@ export default {
   methods: {
     logout() {
       localStorage.clear();
-      this.$router.push({path: '/', params: {logout: true}})
+      this.$router.push({
+        path: '/',
+        params: {
+          logout: true
+        }
+      })
     }
   }
 
@@ -71,4 +117,29 @@ export default {
 </script>
 
 <style lang="css">
+.navbar {
+    box-shadow: 2px 2px 6px grey;
+    background-color: #f5f5f5;
+    border-color: transparent;
+}
+.side-nav {
+    box-shadow: 4px 2px 10px grey;
+}
+
+.side-nav li a:hover,
+.side-nav li a:active{
+    background-color: #111 !important;
+    color: white !important;
+}
+
+.side-nav li a:link,
+.side-nav li a:visited{
+    background-color: #222 !important;
+    color: white !important;
+}
+
+#page-wrapper {
+    margin-top: 60px;
+}
+
 </style>

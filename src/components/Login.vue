@@ -9,13 +9,13 @@
       <div class="row form-div">
           <p v-show="alert">Username and password do not match.</p>
         <form class="form-login">
-          <label for="username">Username</label>
+          <label for="username"><i class="ion-person"></i> Username</label>
           <input type="text" name="username" placeholder="Your username" v-model="username">
 
-          <label for="password">Password</label>
+          <label for="password"><i class="ion-locked"></i> Password</label>
           <input type="password" name="password" placeholder="Your password" v-model="password">
         </form>
-            <a href="#" class="btn-signin" @click="submit">Sign in</a>
+            <a href="#" class="btn-signin" @click="submit"><i class="ion-lock-combination"></i>Sign in</a>
       </div>
 
 
@@ -56,7 +56,7 @@ export default {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('username', this.username)
           localStorage.setItem('user_id', response.data.id)
-          this.$router.push('/home')
+          this.$router.push('/dash')
         }
       }, function(response) {
         console.log("error : " + JSON.stringify(response));
@@ -70,7 +70,8 @@ export default {
 <style>
 header {
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../static/img/medical.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../static/img/doctor.jpg');
+  /*background-color: #3498db;*/
   background-size: cover;
 }
 
@@ -143,10 +144,14 @@ label {
     font-weight: 400;
     align-self: center;
     transition: background-color 0.2s;
-    width: 40%;
+    width: 50%;
     margin: 35px auto 15px auto;
     text-align: center;
 
+}
+
+i {
+    margin-right: 5px;
 }
 
 .btn-signin:hover,

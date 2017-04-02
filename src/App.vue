@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-
           <router-view></router-view>
-
   </div>
 </template>
 
@@ -13,13 +11,19 @@ export default {
 </script>
 
 <style>
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+}
+
 html {
+    height: 100%;
     background-color: #fff;
     color: #555;
     font-family: 'Lato', 'Arial', sans-serif;

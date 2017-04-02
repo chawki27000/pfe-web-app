@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
+import Dash from '@/components/home/Dash'
 import Home from '@/components/Home'
 
 import Information from '@/components/home/Information'
@@ -31,6 +32,11 @@ export default new Router({
       name: 'Home',
       component: Home,
       children: [
+          {
+              path: '/dash',
+              name: 'Dash',
+              component: Dash
+          },
           {
               path: '/info',
               name: 'Information',

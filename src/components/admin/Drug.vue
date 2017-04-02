@@ -6,14 +6,44 @@
       <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong> the user was registered. <br>id: {{id_success}}</div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Add Drug</h3>
-        </div>
 
-        <div class="panel-body">
+  <div class="row row-btn">
+    <a class="btn-add" data-toggle="modal" data-target="#myModal"><i class="ion-plus"></i>Add Drug</a>
+  </div>
+
+  <div class="row">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Format</th>
+          <th>Masse</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="d in drugs">
+          <td>{{d.name}}</td>
+          <td>{{d.category}}</td>
+          <td>{{d.format}}</td>
+          <td>{{d.masse}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MODAL DECLARATION -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add Drug</h4>
+        </div>
+        <div class="modal-body">
           <div class="form-group">
             <label for="username">Name</label>
             <input type="text" class="form-control" placeholder="Name" v-model="drug.name">
@@ -24,10 +54,10 @@
           </div>
           <div class="form-group">
             <label class="control-label" for="selectbasic">Format</label>
-            <select  name="selectbasic" class="form-control" v-model="drug.format">
-                <option value="pilule">pilule</option>
-                <option value="gelule">gelule</option>
-              </select>
+            <select name="selectbasic" class="form-control" v-model="drug.format">
+                  <option value="pilule">pilule</option>
+                  <option value="gelule">gelule</option>
+                </select>
           </div>
 
           <div class="form-group">
@@ -35,22 +65,13 @@
             <input type="number" class="form-control" placeholder="Masse" v-model="drug.masse">
           </div>
 
-          <a class="btn btn-primary" @click="send">Submit</a>
-
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" @click="send">Submit</button>
         </div>
       </div>
     </div>
-
-    <div class="col-md-6">
-      <div class="list-group" v-for="d in drugs">
-        <a class="list-group-item active">{{d._id}}</a>
-        <a class="list-group-item"><strong>Name : </strong>{{d.name}}</a>
-        <a class="list-group-item"><strong>Category : </strong>{{d.category}}</a>
-        <a class="list-group-item"><strong>Format : </strong>{{d.format}}</a>
-        <a class="list-group-item"><strong>Masse : </strong>{{d.masse}}</a>
-      </div>
-    </div>
-
   </div>
 </div>
 </template>
@@ -103,17 +124,16 @@ export default {
           fm,
           ms
         }
-    }).then((response) => {
+      }).then((response) => {
         if (response.data.addDrug._id) {
-            this.success = true
-            this.id_success = response.data.addDrug._id
+          this.success = true
+          this.id_success = response.data.addDrug._id
+        } else {
+          this.error = true
         }
-        else {
-            this.error = true
-        }
-    }).catch((error) => {
+      }).catch((error) => {
         console.error(error);
-    })
+      })
     }
   }
 

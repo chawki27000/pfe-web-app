@@ -8,14 +8,44 @@
     </div>
   </div>
 
+  <div class="row row-btn">
+    <a class="btn-add" data-toggle="modal" data-target="#myModal"><i class="ion-plus"></i>Add Hospital</a>
+  </div>
+
   <div class="row">
 
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Add Hospital</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>lat</th>
+          <th>lon</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="h in hospitals">
+          <td>{{h.name}}</td>
+          <td>{{h.address}}</td>
+          <td>{{h.coordinates.lat}}</td>
+          <td>{{h.coordinates.lon}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- MODAL DECLARATION -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add Hospital</h4>
         </div>
-        <div class="panel-body">
+        <div class="modal-body">
           <div class="form-group">
             <label for="username">Name</label>
             <input type="text" class="form-control" placeholder="Name" v-model="hospital.name">
@@ -32,22 +62,16 @@
             <label for="username">Coordinate (lon)</label>
             <input type="number" class="form-control" placeholder="lon" v-model="hospital.lon">
           </div>
-          <a class="btn btn-primary" @click="send">Submit</a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" @click="send">Submit</button>
         </div>
       </div>
     </div>
-
-    <div class="col-md-6">
-      <div class="list-group" v-for="h in hospitals">
-        <a class="list-group-item active">{{h._id}}</a>
-        <a class="list-group-item"><strong>Name : </strong>{{h.name}}</a>
-        <a class="list-group-item"><strong>Address : </strong>{{h.address}}</a>
-        <a class="list-group-item"><strong>lat : </strong>{{h.coordinates.lat}}</a>
-        <a class="list-group-item"><strong>lon : </strong>{{h.coordinates.lon}}</a>
-      </div>
-    </div>
-
   </div>
+</div>
+
 </div>
 </template>
 
@@ -105,15 +129,14 @@ export default {
           lon
         }
       }).then((response) => {
-          if (response.data.addHospital._id) {
-              this.success = true
-              this.id_success = response.data.addHospital._id
-          }
-          else {
-              this.error = true
-          }
+        if (response.data.addHospital._id) {
+          this.success = true
+          this.id_success = response.data.addHospital._id
+        } else {
+          this.error = true
+        }
       }).catch((error) => {
-          console.error(error);
+        console.error(error);
       })
     }
   }

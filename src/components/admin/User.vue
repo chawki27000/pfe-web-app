@@ -6,76 +6,100 @@
       <div class="alert alert-success" role="alert" v-show="success"><strong>Success</strong> the user was registered.<br> id: {{id_success}}</div>
     </div>
   </div>
+
+  <div class="row row-btn">
+      <a class="btn-add" data-toggle="modal" data-target="#myModal"><i class="ion-person-add"></i>Add User</a>
+  </div>
+
   <div class="row">
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Add user</h3>
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+                  <tr v-for="us in users">
+                    <td>{{us.username}}</td>
+                    <td>{{us.email}}</td>
+                    <td>{{us.firstName}}</td>
+                    <td>{{us.lastName}}</td>
+                    <td>{{us.role}}</td>
+                  </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <!-- MODAL DECLARATION -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add User</h4>
         </div>
-        <div class="panel-body">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" placeholder="Username" v-model="user.username">
-          </div>
-          <div class="form-group">
-            <label for="username">Email</label>
-            <input type="text" class="form-control" placeholder="Email" v-model="user.email">
-          </div>
-          <div class="form-group">
-            <label for="username">First Name</label>
-            <input type="text" class="form-control" placeholder="FirstName" v-model="user.firstName">
-          </div>
-          <div class="form-group">
-            <label for="username">Last Name</label>
-            <input type="text" class="form-control" placeholder="LastName" v-model="user.lastName">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" placeholder="Password" v-model="user.password">
-          </div>
-          <div class="form-group">
-            <label class=" control-label" for="selectbasic">Role</label>
-            <select name="selectbasic" class="form-control" v-model="user.role">
-                <option value="Doctor">Doctor</option>
-                <option value="Patient">Patient</option>
-                <option value="Admin">Admin</option>
-              </select>
-          </div>
-
-          <div v-if="user.role=='Doctor'">
+        <div class="modal-body">
             <div class="form-group">
-              <label for="password">Speciality</label>
-              <input type="text" class="form-control" placeholder="Speciality" v-model="doctor.speciality">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" placeholder="Username" v-model="user.username">
             </div>
             <div class="form-group">
-              <label for="password">Service</label>
-              <input type="text" class="form-control" placeholder="Service" v-model="doctor.service">
+              <label for="username">Email</label>
+              <input type="text" class="form-control" placeholder="Email" v-model="user.email">
             </div>
-
             <div class="form-group">
-              <label class=" control-label" for="selectbasic">Hospital</label>
-              <select name="selectbasic" class="form-control" v-model="doctor.work">
-                  <option v-for="h in hospitals" v-bind:value="h._id">{{h.name}}</option>
+              <label for="username">First Name</label>
+              <input type="text" class="form-control" placeholder="FirstName" v-model="user.firstName">
+            </div>
+            <div class="form-group">
+              <label for="username">Last Name</label>
+              <input type="text" class="form-control" placeholder="LastName" v-model="user.lastName">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" placeholder="Password" v-model="user.password">
+            </div>
+            <div class="form-group">
+              <label class=" control-label" for="selectbasic">Role</label>
+              <select name="selectbasic" class="form-control" v-model="user.role">
+                  <option value="Doctor">Doctor</option>
+                  <option value="Patient">Patient</option>
+                  <option value="Admin">Admin</option>
                 </select>
             </div>
-          </div>
-          <a class="btn btn-primary submit-btn" @click="send">Submit</a>
 
+            <div v-if="user.role=='Doctor'">
+              <div class="form-group">
+                <label for="password">Speciality</label>
+                <input type="text" class="form-control" placeholder="Speciality" v-model="doctor.speciality">
+              </div>
+              <div class="form-group">
+                <label for="password">Service</label>
+                <input type="text" class="form-control" placeholder="Service" v-model="doctor.service">
+              </div>
+
+              <div class="form-group">
+                <label class=" control-label" for="selectbasic">Hospital</label>
+                <select name="selectbasic" class="form-control" v-model="doctor.work">
+                    <option v-for="h in hospitals" v-bind:value="h._id">{{h.name}}</option>
+                  </select>
+              </div>
+            </div>
         </div>
-
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="list-group" v-for="us in users">
-        <a class="list-group-item active">{{us._id}}</a>
-        <a class="list-group-item"><strong>Username : </strong>{{us.username}}</a>
-        <a class="list-group-item"><strong>Email : </strong>{{us.email}}</a>
-        <a class="list-group-item"><strong>FirstName : </strong>{{us.firstName}}</a>
-        <a class="list-group-item"><strong>LastName : </strong>{{us.lastName}}</a>
-        <a class="list-group-item"><strong>Role : </strong>{{us.role}}</a>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" @click="send">Submit</button>
+        </div>
       </div>
     </div>
   </div>
+
 </div>
 </template>
 
@@ -182,7 +206,7 @@ export default {
           this.success = true
           this.id_success = response.data.addUser._id
           if (this.user.role === 'Doctor') {
-              this.sendDoc(response.data.addUser._id, this.doctor.speciality,
+            this.sendDoc(response.data.addUser._id, this.doctor.speciality,
               this.doctor.service, this.doctor.work)
           }
         } else {
@@ -192,10 +216,38 @@ export default {
         console.error(error);
       })
     }
+  },
+  mounted() {
+
   }
 }
 </script>
 
 <style lang="css">
 
+.btn-add,
+.btn-add:link,
+.btn-add:visited {
+    text-decoration: none;
+    border: 1px solid #3498db;
+    padding: 30px;
+    font-size: 120%;
+    border-radius: 3px;
+    background-color: #3498db;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+.btn-add:hover,
+.btn-add:active {
+  text-decoration: none;
+  color: #fff;
+  background-color: #2487c9;
+}
+
+.row-btn {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    width: 100%;
+    text-align:center;
+}
 </style>
