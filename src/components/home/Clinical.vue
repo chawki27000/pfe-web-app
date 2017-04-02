@@ -93,17 +93,38 @@
 
       <div class="row row2" v-show="!next">
           <div class="col-md-2 col-md-offset-5">
-              <a class="btn btn-success" @click="send">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
+              <a class="btn btn-success" @click="send" data-toggle="modal" data-target="#myModal">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
           </div>
       </div>
 
-      <div class="row row2" v-show="next">
-              <button type="button" class="btn btn-primary col-md-3 col-md-offset-2" @click="stable">
-                  Stable
-              </button>
-              <button type="button" class="btn btn-warning col-md-3 col-md-offset-1" @click="instable">
-                  Instable
-              </button>
+
+      <!-- MODAL DECLARATION -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Choice</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <i class="ion-android-happy"></i>
+                        <a class="btn-choice btn-stable" data-dismiss="modal" @click="stable">Stable</a>
+                    </div>
+                    <div class="col-md-6">
+                        <i class="ion-android-sad"></i>
+                        <a class="btn-choice btn-instable" data-dismiss="modal" @click="instable">Instable</a>
+                    </div>
+                </div>
+
+
+            </div>
+          </div>
+        </div>
       </div>
 
   </div>
@@ -180,6 +201,69 @@ export default {
 }
 .row2 {
     margin-top: 3%
+}
+
+.modal-body {
+    margin: 20px;
+}
+
+.btn-choice,
+.btn-choice:link,
+.btn-choice:visited {
+    background-color: #ccc;
+    text-decoration: none !important;
+    border-radius: 3px;
+    border: 1px solid #555;
+    padding: 15px 70px;
+    font-size: 120%;
+    border: none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .2);
+    color: #fff;
+    font-weight: 100;
+    align-self: center;
+    transition: background-color 0.2s;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-choice:hover,
+.btn-choice:active {
+    text-decoration: none !important;
+    background: #f6f7f9;
+    color: #fff;
+}
+
+.btn-stable,
+.btn-stable:link,
+.btn-stable:visited {
+    background-color: #27ae60;
+}
+
+.btn-stable:hover,
+.btn-stable:active {
+    background-color: #1e8449;
+}
+
+.btn-instable,
+.btn-instable:link,
+.btn-instable:visited {
+    background-color: #c0392b;
+}
+
+.btn-instable:hover,
+.btn-instable:active {
+    background-color: #962d22;
+}
+
+.modal-body .row .col-md-6 a,
+.modal-body .row .col-md-6 i {
+    display: inline-block;
+}
+
+.modal-body .row .col-md-6 i {
+    font-size: 700%;
+    width: 100%;
+    text-align: center;
 }
 
 </style>

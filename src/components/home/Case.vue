@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-            <tr v-for="child in childs">
+            <tr v-for="child in childs" :key="child._id">
               <td>{{child.age.num}} {{child.age.types}}</td>
               <td>{{child.weight}}</td>
               <td>{{child.school_mother}}</td>
