@@ -7,19 +7,21 @@
       <tr>
         <th>Age</th>
         <th>Weight</th>
-        <th>Mother's school level</th>
-        <th>Father's school level</th>
+        <th>Gender</th>
       </tr>
     </thead>
     <tbody>
             <tr v-for="child in childs" :key="child._id">
               <td>{{child.age.num}} {{child.age.types}}</td>
               <td>{{child.weight}}</td>
-              <td>{{child.school_mother}}</td>
-              <td>{{child.school_father}}</td>
+              <td>{{child.gender}}</td>
             </tr>
     </tbody>
   </table>
+
+  <hemodynamic></hemodynamic>
+  <pulomonaire></pulomonaire>
+
 </div>
 
 </template>
@@ -50,6 +52,7 @@ export default {
                           types
                         }
                     weight
+                    gender
                     school_mother
                     school_father
                     address_parent

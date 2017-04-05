@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
-      <div class="row row1">
-          <div class="col-md-6">
+      <div class="row row1" v-show="next == 0">
+          <h3>Information préliminaire</h3>
               <form class="form-horizontal">
                   <div class="form-group">
                       <label class="col-md-4 control-label" for="age">Age of child</label>
@@ -17,86 +17,50 @@
                   </div>
 
                   <div class="form-group">
-                      <label class="col-md-4 control-label" for="weight">weight of child</label>
+                      <label class="col-md-4 control-label" for="weight">Weight of child</label>
                       <div class="col-md-2">
                           <input id="weight" name="weight" type="number" placeholder="weight" class="form-control input-md" required="" v-model.number="weight">
 
                       </div>
                   </div>
 
+
                   <div class="form-group">
-                      <label class="col-md-4 control-label" for="selectbasic">Level of father</label>
+                      <label class="col-md-4 control-label" for="selectbasic">Gender of child</label>
                       <div class="col-md-4">
-                          <select id="selectbasic" name="selectbasic" class="form-control" v-model="lev_father">
-                        <option value="0">Sans scolarité</option>
-                        <option value="1">1ere primaire</option>
-                        <option value="2">2eme primaire</option>
-                        <option value="3">3eme primaire</option>
-                        <option value="4">4eme primaire</option>
-                        <option value="5">5eme primaire</option>
-                        <option value="6">6eme primaire</option>
-                        <option value="7">1ere moyen</option>
-                        <option value="8">2eme moyen</option>
-                        <option value="9">3ere moyen</option>
-                        <option value="10">4ere moyen</option>
-                        <option value="11">1ere secondaire</option>
-                        <option value="12">2eme secondaire</option>
-                        <option value="13">3eme secondaire</option>
-                        <option value="14">Université</option>
+                          <select id="selectbasic" name="selectbasic" class="form-control" v-model="gender">
+                        <option value="Mal">Mal</option>
+                        <option value="Female">Female</option>
                       </select>
                       </div>
                   </div>
-
-                  <div class="form-group">
-                      <label class="col-md-4 control-label" for="Level of mother">Level of mother</label>
-                      <div class="col-md-4">
-                          <select id="Level of mother" name="Level of mother" class="form-control" v-model="lev_mother">
-                        <option value="0">Sans scolarité</option>
-                        <option value="1">1ere primaire</option>
-                        <option value="2">2eme primaire</option>
-                        <option value="3">3eme primaire</option>
-                        <option value="4">4eme primaire</option>
-                        <option value="5">5eme primaire</option>
-                        <option value="6">6eme primaire</option>
-                        <option value="7">1ere moyen</option>
-                        <option value="8">2eme moyen</option>
-                        <option value="9">3ere moyen</option>
-                        <option value="10">4ere moyen</option>
-                        <option value="11">1ere secondaire</option>
-                        <option value="12">2eme secondaire</option>
-                        <option value="13">3eme secondaire</option>
-                        <option value="14">Université</option>
-                      </select>
-                      </div>
-                  </div>
-
-                  <div class="form-group">
-                      <label class="col-md-4 control-label" for="address">Address</label>
-                      <div class="col-md-4">
-                          <textarea class="form-control" id="address" name="address" v-model="address"></textarea>
-                      </div>
-                  </div>
-
               </form>
-          </div>
 
-          <div class="col-md-6">
-              <ul class="list-group">
-                  <li class="list-group-item"><strong>Age : {{age}} {{types}}</strong></li>
-                  <li class="list-group-item"><strong>Weight : {{weight}} kg</strong></li>
-                  <li class="list-group-item"><strong>Level of Father : {{lev_father}}</strong></li>
-                  <li class="list-group-item"><strong>Level of mother : {{lev_mother}}</strong></li>
-                  <li class="list-group-item"><strong>Address : {{address}}</strong></li>
-            </ul>
-          </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <a class="btn-next" @click="send">Next<i class="ion-arrow-right-a"></i></a>
+                  </div>
+              </div>
+
       </div>
 
-      <div class="row row2" v-show="!next">
-          <div class="col-md-2 col-md-offset-5">
+
+
+      <div class="row row1" v-show="next == 1">
+          <hemodynamic></hemodynamic>
+      </div>
+
+      <div class="row row1" v-show="next == 2">
+          <pulmonaire></pulmonaire>
+      </div>
+
+      <div class="row row1" v-show="next == 3">
+          <neurological></neurological>
+      </div>
+
+          <!-- <div class="col-md-2 col-md-offset-5">
               <a class="btn btn-success" @click="send" data-toggle="modal" data-target="#myModal">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
-          </div>
-      </div>
-
+          </div> -->
 
       <!-- MODAL DECLARATION -->
 
@@ -109,7 +73,6 @@
               <h4 class="modal-title" id="myModalLabel">Choice</h4>
             </div>
             <div class="modal-body">
-
                 <div class="row">
                     <div class="col-md-6">
                         <i class="ion-android-happy"></i>
@@ -120,29 +83,34 @@
                         <a class="btn-choice btn-instable" data-dismiss="modal" @click="instable">Instable</a>
                     </div>
                 </div>
-
-
             </div>
           </div>
         </div>
       </div>
+
 
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag';
+import hemodynamic from '../doctor/instable/Hemodynamic'
+import pulmonaire from '../doctor/instable/Pulmonaire'
+import neurological from '../doctor/instable/Neurological'
 export default {
+  components: {
+    hemodynamic,
+    pulmonaire,
+    neurological
+  },
   data() {
     return {
       age: 0,
-      types: '',
+      types: "years",
       weight: 0,
-      lev_father: '',
-      lev_mother: '',
-      address: '',
+      gender: 'Mal',
       // behavior variables
-      next: false
+      next: 0
     }
   },
 
@@ -151,29 +119,32 @@ export default {
       const ag = this.age
       const ty = this.types
       const wi = this.weight
-      const sm = this.lev_father
-      const sf = this.lev_mother
-      const ad = this.address
+      const ge = this.gender
+
       this.$apollo.mutate({
         mutation: gql `
-            mutation($ag: Int!, $ty: String!,$wi: Float!, $sm: String!, $sf: String!, $ad: String){
-              addChild(data:{age:{num: $ag, types: $ty}, weight: $wi, school_mother: $sm, school_father: $sf, address_parent: $ad}){
+            mutation($ag: Int!, $ty: String!,$wi: Float!, $ge: String!){
+              addChild(data:{age:{num: $ag, types: $ty}, weight: $wi, gender: $ge}){
                 _id
+                age {
+                  num
+                  types
+                }
               }
           }`,
         variables: {
           ag,
           ty,
           wi,
-          sm,
-          sf,
-          ad
+          ge
         }
       }).then((response) => {
         if (response.data.addChild._id) {
           localStorage.setItem('child_id', response.data.addChild._id)
-          // redirect
-          this.next = true
+          localStorage.setItem('child_age', response.data.addChild.age.num)
+          localStorage.setItem('child_types', response.data.addChild.age.types)
+          // Increment
+          this.next++
         }
       }).catch((error) => {
         console.error(error);
@@ -264,6 +235,41 @@ export default {
     font-size: 700%;
     width: 100%;
     text-align: center;
+}
+
+h3 {
+    text-align: center;
+    margin: 20px;
+}
+
+.btn-next,
+.btn-next:link,
+.btn-next:visited {
+    display: block;
+    text-align: center;
+    padding: 12px 0;
+    border: 2px solid #4F8EF7;
+    border-radius: 2px;
+    background-color: white;
+    text-decoration: none;
+    width: 15%;
+    margin: 15px auto;
+    color: #4F8EF7;
+    font-size: 140%;
+
+}
+
+.btn-next i {
+    margin-left: 10px;
+    font-size: 120%;
+    vertical-align: middle;
+}
+
+.btn-next:hover,
+.btn-next:active {
+    text-decoration: none;
+    background: #4F8EF7;
+    color: white;
 }
 
 </style>

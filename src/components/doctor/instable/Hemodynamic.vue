@@ -1,6 +1,8 @@
 <template>
 <div class="row row1">
-  <div class="col-md-6">
+  <h3>Examen Hemodynamique</h3>
+  <div class="col-md-6 col-md-offset-3">
+
     <form class="form-horizontal">
 
       <div class="form-group">
@@ -70,10 +72,10 @@
         <label class="col-md-3 control-label">Diurèse</label>
         <div class="col-md-6">
           <select name="selectbasic" class="form-control" v-model="data.diurese">
-                <option value="polyurie">Polyurie</option>
-                <option value="oligurie">Oligurie</option>
-                <option value="anurie">Anurie</option>
-              </select>
+                        <option value="polyurie">Polyurie</option>
+                        <option value="oligurie">Oligurie</option>
+                        <option value="anurie">Anurie</option>
+                    </select>
         </div>
       </div>
 
@@ -81,21 +83,20 @@
         <label class="col-md-3 control-label">Cardiac Auscultation</label>
         <div class="col-md-6">
           <select name="selectbasic" class="form-control" v-model="data.auscu_card">
-                <option value="normal">Normal</option>
-                <option value="abnormal">Abnormal</option>
-              </select>
+                        <option value="normal">Normal</option>
+                        <option value="abnormal">Abnormal</option>
+                    </select>
         </div>
       </div>
-      <button type="button" class="btn btn-primary col-md-3 col-md-offset-4" @click="submit">Submit</button>
+
     </form>
+
   </div>
 
-  <div class="col-md-6">
-    <ul class="list-group">
-      <li class="list-group-item"><strong>Cardiac frequence : </strong>Tachycardie</li>
-      <li class="list-group-item"><strong>TA : </strong>Hypertension systolique</li>
-      <li class="list-group-item"><strong>Temperature : </strong>Normal</li>
-    </ul>
+  <div class="row">
+      <div class="col-md-12">
+          <a class="btn-next" @click="submit">Next<i class="ion-arrow-right-a"></i></a>
+      </div>
   </div>
 
 </div>
@@ -121,6 +122,11 @@ export default {
         auscu_card: ''
       },
       success: false,
+      expert: {
+        card_freq: '',
+        ta: '',
+        temp: '',
+      }
     }
   },
   methods: {
@@ -142,11 +148,13 @@ export default {
         auscu_card: this.data.auscu_card,
       }).then(response => {
         this.success = true
+        // Increment
+        this.$parent.$data.next++
         console.log(response)
       }, response => {
         console.log(response)
       })
-    }
+    },
   }
 }
 </script>
@@ -156,4 +164,5 @@ export default {
     margin-top: 2%;
     margin-bottom: 3%
 }
+
 </style>
