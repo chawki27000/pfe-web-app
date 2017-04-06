@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-      <div class="row row1" v-show="next == 0">
+      <div class="row row1" v-if="next == 0">
           <h3>Information préliminaire</h3>
               <form class="form-horizontal">
                   <div class="form-group">
@@ -46,16 +46,20 @@
 
 
 
-      <div class="row row1" v-show="next == 1">
+      <div class="row row1" v-if="next == 1">
           <hemodynamic></hemodynamic>
       </div>
 
-      <div class="row row1" v-show="next == 2">
+      <div class="row row1" v-if="next == 2">
           <pulmonaire></pulmonaire>
       </div>
 
-      <div class="row row1" v-show="next == 3">
+      <div class="row row1" v-if="next == 3">
           <neurological></neurological>
+      </div>
+
+      <div class="row row1" v-if="next == 4">
+          <result></result>
       </div>
 
           <!-- <div class="col-md-2 col-md-offset-5">
@@ -97,11 +101,13 @@ import gql from 'graphql-tag';
 import hemodynamic from '../doctor/instable/Hemodynamic'
 import pulmonaire from '../doctor/instable/Pulmonaire'
 import neurological from '../doctor/instable/Neurological'
+import result from '../doctor/instable/Result'
 export default {
   components: {
     hemodynamic,
     pulmonaire,
-    neurological
+    neurological,
+    result
   },
   data() {
     return {
@@ -141,8 +147,6 @@ export default {
       }).then((response) => {
         if (response.data.addChild._id) {
           localStorage.setItem('child_id', response.data.addChild._id)
-          localStorage.setItem('child_age', response.data.addChild.age.num)
-          localStorage.setItem('child_types', response.data.addChild.age.types)
           // Increment
           this.next++
         }

@@ -151,8 +151,10 @@ export default {
         bruit: this.data.bruit,
         toux: this.data.toux,
       }).then(response => {
+
         this.success = true
         // Increment
+        localStorage.setItem('pleuro_id', response.body.id)
         this.$parent.$data.next++
         console.log(response)
       }, response => {

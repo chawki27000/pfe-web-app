@@ -1,7 +1,7 @@
 <template>
 <div class="row row1">
   <h3>Examen Neurologique</h3>
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3" v-show="result">
     <form class="form-horizontal">
 
       <img src="../../../../static/img/instable/neuro-1.png">
@@ -31,7 +31,7 @@
     </form>
   </div>
 
-  <div class="row">
+  <div class="row" v-show="result">
     <div class="col-md-12">
       <a class="btn-next" @click="submit">Resultat<i class="ion-ios-pulse-strong"></i></a>
     </div>
@@ -42,9 +42,16 @@
 
 <script>
 export default {
+    data () {
+        return {
+            result: true,
+        }
+    },
     methods: {
         submit () {
-            console.log("RESULTAT");
+            // Increment
+            // TODO : storage Neuro_id
+            this.$parent.$data.next++
         }
     }
 }

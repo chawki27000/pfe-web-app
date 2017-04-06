@@ -76,8 +76,8 @@ header {
 }
 
 h2 {
-
   display: block;
+  text-align: center;
   width: 23%;
   margin: 80px auto;
   font-size: 250%;

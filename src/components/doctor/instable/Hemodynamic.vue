@@ -149,6 +149,7 @@ export default {
       }).then(response => {
         this.success = true
         // Increment
+        localStorage.setItem('hemo_id', response.body.id)
         this.$parent.$data.next++
         console.log(response)
       }, response => {

@@ -27,8 +27,14 @@ html {
     background-color: #fff;
     color: #555;
     font-family: 'Lato', 'Arial', sans-serif;
-    font-weight: 300;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 15px;
+    text-rendering: optimizeLegibility;
+}
+
+html * {
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-weight: 400;
     text-rendering: optimizeLegibility;
 }
 </style>
