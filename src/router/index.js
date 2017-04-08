@@ -15,8 +15,6 @@ import Drug from '@/components/admin/Drug'
 import Stable from '@/components/doctor/Stable'
 import Instable from '@/components/doctor/Instable'
 
-import Hemodynamic from '@/components/doctor/instable/Hemodynamic'
-import Pulmonaire from '@/components/doctor/instable/Pulmonaire'
 
 Vue.use(Router)
 
@@ -76,18 +74,6 @@ export default new Router({
               path: '/instable',
               name: 'Instable',
               component: Instable,
-              children: [
-                  {
-                      path: '/hemodynamic',
-                      path: 'Hemodynamic',
-                      component: Hemodynamic
-                  },
-                  {
-                      path: '/pulmonaire',
-                      path: 'Pulmonaire',
-                      component: Pulmonaire
-                  }
-              ]
           }
       ]
   },

@@ -8,7 +8,7 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Ouverture des yeux</label>
         <div class="col-md-6">
-          <input type="number" min="1" max="4" class="form-control input-md" required="true">
+          <input type="number" min="1" max="4" class="form-control input-md" required="true" v-model.number="param1">
         </div>
       </div>
 
@@ -16,7 +16,7 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Meilleure réaction verbale</label>
         <div class="col-md-6">
-          <input type="number" min="1" max="5" class="form-control input-md" required="true">
+          <input type="number" min="1" max="5" class="form-control input-md" required="true" v-model.number="param2">
         </div>
       </div>
 
@@ -24,7 +24,7 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Meilleure réaction motrice</label>
         <div class="col-md-6">
-          <input type="number" min="1" max="6" class="form-control input-md" required="true">
+          <input type="number" min="1" max="6" class="form-control input-md" required="true" v-model.number="param3">
         </div>
       </div>
 
@@ -44,14 +44,31 @@
 export default {
     data () {
         return {
+            param1: 1,
+            param2: 1,
+            param3: 1,
             result: true,
         }
     },
     methods: {
         submit () {
-            // Increment
-            // TODO : storage Neuro_id
-            this.$parent.$data.next++
+            var resource = this.$resource('neurologic/insert');
+            resource.save({
+                doctor: localStorage.getItem('user_id'),
+                child: localStorage.getItem('child_id'),
+                param1: this.param1,
+                param2: this.param2,
+                param2: this.param2,
+            }).then(response => {
+                var result = this.param1 + this.param2 + this.param3
+                localStorage.setItem('neuro', result)
+                localStorage.setItem('neuro_id', response.body.id)
+                // Increment
+                this.$parent.$data.next++
+            }, response => {
+                console.error(response)
+            })
+
         }
     }
 }
