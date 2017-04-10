@@ -83,9 +83,9 @@
         <label class="col-md-3 control-label">Cardiac Auscultation</label>
         <div class="col-md-6">
           <select name="selectbasic" class="form-control" v-model="data.auscu_card">
-                        <option value="normal">Normal</option>
-                        <option value="abnormal">Abnormal</option>
-                    </select>
+            <option value="normal">Normal</option>
+            <option value="abnormal">Abnormal</option>
+        </select>
         </div>
       </div>
 
@@ -94,9 +94,9 @@
   </div>
 
   <div class="row">
-      <div class="col-md-12">
-          <a class="btn-next" @click="submit">Next<i class="ion-arrow-right-a"></i></a>
-      </div>
+    <div class="col-md-12">
+      <a class="btn-next" @click="submit">Next<i class="ion-arrow-right-a"></i></a>
+    </div>
   </div>
 
 </div>
@@ -147,11 +147,14 @@ export default {
         diurese: this.data.diurese,
         auscu_card: this.data.auscu_card,
       }).then(response => {
+        // save some data for traitment result
+        localStorage.setItem('hemo_trc', this.data.trc)
+        
         this.success = true
         // Increment
         localStorage.setItem('hemo_id', response.body.id)
         this.$parent.$data.next++
-        console.log(response)
+          console.log(response)
       }, response => {
         console.log(response)
       })
@@ -165,5 +168,4 @@ export default {
     margin-top: 2%;
     margin-bottom: 3%
 }
-
 </style>

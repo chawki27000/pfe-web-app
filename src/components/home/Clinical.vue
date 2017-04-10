@@ -44,6 +44,11 @@
 
       </div>
 
+      <div class="row">
+          <a><i class="ion-ios-arrow-back"></i></a>
+          <a><i class="ion-ios-arrow-forward"></i></a>
+      </div>
+
       <div class="row row1" v-if="next == 1">
           <hemodynamic></hemodynamic>
       </div>
