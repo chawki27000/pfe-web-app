@@ -44,9 +44,9 @@
     </section>
   </div>
     <div class="row btns">
-        <a>Amélioration</a>
-        <a>Complication</a>
-        <a>Echec</a>
+        <a @click="send('improve')">Amélioration</a>
+        <a @click="send('complication')">Complication</a>
+        <a @click="send('fail')">Echec</a>
     </div>
 
 </div>
@@ -91,6 +91,33 @@ export default {
             // neuro state
             // TODO: Neuro
         })
+    },
+    methods: {
+        back() {
+            this.$parent.$data.next = 1
+        },
+        send(feedback) {
+            if (feedback === 'improve'){
+                this.$router.push({name: 'Stable'})
+            }
+            else if (feedback === 'complication' || feedback === 'fail') {
+                console.log("abdeka");
+                this.back()
+            }
+            // var result_id = localStorage.getItem('result_id')
+            // var resource_result = this.$resource('result/update{/id}{/param}')
+            //
+            // resource_result.get({id: result_id, param: feedback}).then(response => {
+            //     console.log(response);
+            //     if (response.body.success){
+            //         console.log("SUCESS");
+            //     }
+            //     else {
+            //         console.log("FAIL");
+            //     }
+            // })
+
+        }
     }
 }
 </script>

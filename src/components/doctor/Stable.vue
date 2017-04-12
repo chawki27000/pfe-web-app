@@ -1,5 +1,9 @@
 <template>
-  <h1>STABLE</h1>
+  <div class="">
+      <h1>STABLE</h1>
+      <p>Information enfant</p>
+      <p>Information toxicité</p>
+  </div>
 </template>
 
 <script>
