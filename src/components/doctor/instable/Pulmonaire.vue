@@ -114,12 +114,13 @@
 </template>
 
 <script>
+import store from '../../../store/store'
 export default {
   data() {
     return {
       data: {
         doctor: localStorage.getItem('user_id'),
-        child: localStorage.getItem('child_id'),
+        child: store.state.child_id,
         fr: 0,
         amplitude: '',
         spo2: 0,
@@ -151,13 +152,15 @@ export default {
         bruit: this.data.bruit,
         toux: this.data.toux,
       }).then(response => {
-        // save some data for traitment result
-        localStorage.setItem('pleuro_cynose', this.data.cyanose)
-        localStorage.setItem('pleuro_rythme', this.data.rythme)
 
         this.success = true
+        // Save data
+        store.commit('PLEURO', {
+            pleuro_id: response.body.id,
+            pleuro_cynose: this.data.cyanose,
+            pleuro_rythme: this.data.rythme
+        })
         // Increment
-        localStorage.setItem('pleuro_id', response.body.id)
         this.$parent.$data.next++
           console.log(response)
       }, response => {

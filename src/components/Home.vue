@@ -71,6 +71,7 @@
 
 <script>
 import gql from 'graphql-tag';
+import store from '../store/store'
 export default {
 
   data() {
@@ -103,7 +104,7 @@ export default {
 
   methods: {
     logout() {
-      localStorage.clear();
+      localStorage.clear()
       this.$router.push({
         path: '/',
         params: {

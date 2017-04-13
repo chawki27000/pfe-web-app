@@ -39,6 +39,7 @@
 
 <script>
 import gql from 'graphql-tag';
+import store from '../../store/store'
 export default {
 
   data() {
@@ -98,14 +99,6 @@ export default {
           id: this.doctor[0].work
         }
       }
-    }
-  },
-
-  methods: {
-    logout() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('username')
-      this.$router.push('/')
     }
   }
 

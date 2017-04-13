@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import store from '../../../store/store'
 export default {
     data () {
         return {
@@ -55,14 +56,17 @@ export default {
             var resource = this.$resource('neurologic/insert');
             resource.save({
                 doctor: localStorage.getItem('user_id'),
-                child: localStorage.getItem('child_id'),
+                child: store.state.child_id,
                 param1: this.param1,
                 param2: this.param2,
                 param2: this.param2,
             }).then(response => {
                 var result = this.param1 + this.param2 + this.param3
-                localStorage.setItem('neuro', result)
-                localStorage.setItem('neuro_id', response.body.id)
+                // Save data
+                store.commit('NEURO', {
+                    score: result,
+                    neuro_id: response.body.id
+                })
                 // Increment
                 this.$parent.$data.next++
             }, response => {

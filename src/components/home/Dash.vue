@@ -25,7 +25,7 @@
 <script>
 // Chart.JS code
 import Chart from 'chart.js'
-
+import store from '../../store/store'
 // VueJS code
 export default {
   data() {

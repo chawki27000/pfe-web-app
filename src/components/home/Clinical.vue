@@ -75,6 +75,7 @@
 
 <script>
 import gql from 'graphql-tag';
+import store from '../../store/store'
 import hemodynamic from '../doctor/instable/Hemodynamic'
 import pulmonaire from '../doctor/instable/Pulmonaire'
 import neurological from '../doctor/instable/Neurological'
@@ -123,7 +124,7 @@ export default {
         }
       }).then((response) => {
         if (response.data.addChild._id) {
-          localStorage.setItem('child_id', response.data.addChild._id)
+            store.commit('CHILD', response.data.addChild._id)
           // Increment
           this.next++
         }
