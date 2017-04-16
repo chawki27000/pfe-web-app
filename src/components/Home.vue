@@ -39,7 +39,7 @@
                         <a href="#/clinical"><i class="ion-ios-pulse-strong"></i>Clinical</a>
                     </li>
                     <li v-if="user[0].role== 'Doctor'">
-                        <a href="#/case"><i class="ion-medkit"></i> Case</a>
+                        <a href="#/case" @click="fun"><i class="ion-medkit"></i> Case</a>
                     </li>
                     <!-- Admin Feature -->
                     <li v-if="user[0].role == 'Admin'">
@@ -111,6 +111,9 @@ export default {
           logout: true
         }
       })
+    },
+    fun() {
+      localStorage.setItem('exam', 0)
     }
   }
 

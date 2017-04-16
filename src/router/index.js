@@ -7,6 +7,7 @@ import Home from '@/components/Home'
 import Information from '@/components/home/Information'
 import Clinical from '@/components/home/Clinical'
 import Case from '@/components/home/Case'
+import Child from '@/components/home/Child'
 
 import User from '@/components/admin/User'
 import Hospital from '@/components/admin/Hospital'
@@ -49,6 +50,11 @@ export default new Router({
               path: '/case',
               name: 'Case',
               component: Case
+          },
+          {
+              path: '/child',
+              name: 'Child',
+              component: Child
           },
           {
               path: '/user',

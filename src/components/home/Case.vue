@@ -8,13 +8,16 @@
         <th>Age</th>
         <th>Weight</th>
         <th>Gender</th>
+        <th>Detail</th>
       </tr>
     </thead>
     <tbody>
             <tr v-for="child in childs" :key="child._id">
+
               <td>{{child.age.num}} {{child.age.types}}</td>
               <td>{{child.weight}}</td>
               <td>{{child.gender}}</td>
+              <td><a @click="detail(child._id)"><i class="ion-ios-pulse-strong"></i></a></td>
             </tr>
     </tbody>
   </table>
@@ -57,7 +60,16 @@ export default {
                     address_parent
                 }
             }`
-    },
+    }
+  },
+  methods: {
+    detail(id) {
+      // Save child_id in localStorage
+      localStorage.setItem('detail_id', id)
+
+      // Redirect
+      this.$router.push('/child')
+    }
   }
 
 }

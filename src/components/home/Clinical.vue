@@ -92,7 +92,7 @@ export default {
       weight: 0,
       gender: 'Mal',
       // behavior variables
-      next: 0
+      next: localStorage.getItem('exam')
     }
   },
 
