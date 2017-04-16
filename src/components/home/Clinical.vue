@@ -69,7 +69,6 @@
               <a class="btn btn-success" @click="send" data-toggle="modal" data-target="#myModal">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
           </div> -->
 
-
   </div>
 </template>
 
@@ -114,6 +113,7 @@ export default {
                   num
                   types
                 }
+                createdAt
               }
           }`,
         variables: {
@@ -124,7 +124,19 @@ export default {
         }
       }).then((response) => {
         if (response.data.addChild._id) {
+<<<<<<< HEAD
             store.commit('CHILD', response.data.addChild._id)
+=======
+          // Sava data in localStorage
+          localStorage.setItem('child_id', response.data.addChild._id)
+          localStorage.setItem('child_data', JSON.stringify({
+              age: this.age,
+              types: this.types,
+              weight: this.weight,
+              gender: this.gender,
+              time: response.data.addChild.createdAt
+          }))
+>>>>>>> 7c82e4b
           // Increment
           this.next++
         }

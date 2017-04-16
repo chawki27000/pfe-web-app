@@ -149,6 +149,7 @@ export default {
         auscu_card: this.data.auscu_card,
       }).then(response => {
         // save some data for traitment result
+<<<<<<< HEAD
 
         this.success = true
         // Save data
@@ -157,6 +158,14 @@ export default {
             hemo_trc: this.data.trc
         })
 
+=======
+        localStorage.setItem('hemo_trc', this.data.trc)
+
+        this.success = true
+        // Save data in localStorage
+        localStorage.setItem('hemo_data', JSON.stringify(this.data))
+        localStorage.setItem('hemo_id', response.body.id)
+>>>>>>> 7c82e4b
         // Increment
         this.$parent.$data.next++
           console.log(response)

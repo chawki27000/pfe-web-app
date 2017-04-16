@@ -154,6 +154,7 @@ export default {
       }).then(response => {
 
         this.success = true
+<<<<<<< HEAD
         // Save data
         store.commit('PLEURO', {
             pleuro_id: response.body.id,
@@ -161,6 +162,14 @@ export default {
             pleuro_rythme: this.data.rythme
         })
         // Increment
+=======
+
+        // Save data in localStorage
+        localStorage.setItem('pleuro_data', JSON.stringify(this.data))
+        localStorage.setItem('pleuro_id', response.body.id)
+        // Increment
+        
+>>>>>>> 7c82e4b
         this.$parent.$data.next++
           console.log(response)
       }, response => {
