@@ -74,7 +74,6 @@
 
 <script>
 import gql from 'graphql-tag';
-import store from '../../store/store'
 import hemodynamic from '../doctor/instable/Hemodynamic'
 import pulmonaire from '../doctor/instable/Pulmonaire'
 import neurological from '../doctor/instable/Neurological'
@@ -124,9 +123,6 @@ export default {
         }
       }).then((response) => {
         if (response.data.addChild._id) {
-<<<<<<< HEAD
-            store.commit('CHILD', response.data.addChild._id)
-=======
           // Sava data in localStorage
           localStorage.setItem('child_id', response.data.addChild._id)
           localStorage.setItem('child_data', JSON.stringify({
@@ -136,7 +132,6 @@ export default {
               gender: this.gender,
               time: response.data.addChild.createdAt
           }))
->>>>>>> 7c82e4b
           // Increment
           this.next++
         }

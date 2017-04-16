@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import store from '../../store/store'
+
 export default {
     data() {
         return {
@@ -65,7 +65,7 @@ export default {
     },
     mounted () {
         var resource_result = this.$resource('result/query{/id}')
-        var result_id = store.state.result_id
+        var result_id = localStorage.getItem('result_id')
 
         // extract Result DATA
         resource_result.get({id: result_id}).then(response => {

@@ -103,13 +103,13 @@
 </template>
 
 <script>
-import store from '../../../store/store'
+
 export default {
   data() {
     return {
       data: {
         doctor: localStorage.getItem('user_id'),
-        child: store.state.child_id,
+        child: localStorage.getItem('child_id'),
         pouls: 0,
         ta: 0,
         marbrure: false,
@@ -149,23 +149,12 @@ export default {
         auscu_card: this.data.auscu_card,
       }).then(response => {
         // save some data for traitment result
-<<<<<<< HEAD
-
-        this.success = true
-        // Save data
-        store.commit('HEMO', {
-            hemo_id: response.body.id,
-            hemo_trc: this.data.trc
-        })
-
-=======
         localStorage.setItem('hemo_trc', this.data.trc)
 
         this.success = true
         // Save data in localStorage
         localStorage.setItem('hemo_data', JSON.stringify(this.data))
         localStorage.setItem('hemo_id', response.body.id)
->>>>>>> 7c82e4b
         // Increment
         this.$parent.$data.next++
           console.log(response)

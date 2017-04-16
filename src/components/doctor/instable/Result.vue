@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import store from '../../../store/store'
+
 export default {
   data() {
     return {
@@ -119,7 +119,7 @@ export default {
         ampl: ''
       },
       neuro: {
-        res: store.state.neuro.score,
+        res: localStorage.getItem('neuro'),
       },
       child_d: {},
       hemo_d: {},
@@ -131,8 +131,8 @@ export default {
     // Hemodynamic expert
     var resource = this.$resource('expert/on/1')
     resource.save({
-      child_id: store.state.child_id,
-      hemo_id: store.state.hemo.hemo_id,
+      child_id: localStorage.getItem('child_id'),
+      hemo_id: localStorage.getItem('hemo_id')
     }).then(response => {
       console.log(response.body);
       this.hemo.fc = response.body.fc;
@@ -145,8 +145,8 @@ export default {
     // Pleuro-pulmonaire expert
     var resource2 = this.$resource('expert/on/2')
     resource2.save({
-      child_id: store.state.child_id,
-      pleuro_id: store.state.pleuro.pleuro_id,
+      child_id: localStorage.getItem('child_id'),
+      pleuro_id: localStorage.getItem('pleuro_id'),
     }).then(response => {
       console.log(response)
       var object = JSON.parse(response.body.body)
@@ -180,38 +180,6 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD
-      send() {
-          var resource = this.$resource('result/insert');
-          resource.save({
-              doctor: localStorage.getItem('user_id'),
-              child: store.state.child_id,
-              hemo_id: store.state.hemo.hemo_id,
-              pleuro_id: store.state.pleuro.pleuro_id,
-              neuro_id: store.state.neuro.neuro_id,
-              fc: this.hemo.fc,
-              ta: this.hemo.ta,
-              temp: this.hemo.temp,
-              fr: this.pleuro.fr,
-              resp: this.pleuro.resp,
-              ampl: this.pleuro.ampl,
-          }).then(response => {
-              store.commit('RESULT', response.body.id)
-          }, response => {
-              console.error(response)
-          })
-      },
-      stable() {
-          this.send()
-          // Next
-          this.$router.push({name: 'Stable'})
-      },
-      instable() {
-          this.send()
-          // Next
-          this.$router.push({name: 'Instable'})
-      }
-=======
     send() {
       var resource = this.$resource('result/insert');
       resource.save({
@@ -246,7 +214,6 @@ export default {
         name: 'Instable'
       })
     }
->>>>>>> 7c82e4b
   }
 
 }
