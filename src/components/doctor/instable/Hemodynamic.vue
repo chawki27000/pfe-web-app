@@ -149,10 +149,12 @@ export default {
       }).then(response => {
         // save some data for traitment result
         localStorage.setItem('hemo_trc', this.data.trc)
-        
+
         this.success = true
-        // Increment
+        // Save data in localStorage
+        localStorage.setItem('hemo_data', JSON.stringify(this.data))
         localStorage.setItem('hemo_id', response.body.id)
+        // Increment
         this.$parent.$data.next++
           console.log(response)
       }, response => {

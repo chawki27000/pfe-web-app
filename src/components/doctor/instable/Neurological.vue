@@ -61,8 +61,14 @@ export default {
                 param2: this.param2,
             }).then(response => {
                 var result = this.param1 + this.param2 + this.param3
+                // Save data in localStorage
                 localStorage.setItem('neuro', result)
                 localStorage.setItem('neuro_id', response.body.id)
+                localStorage.setItem('neuro_data', JSON.stringify({
+                    param1: this.param1,
+                    param2: this.param2,
+                    param3: this.param3
+                }))
                 // Increment
                 this.$parent.$data.next++
             }, response => {

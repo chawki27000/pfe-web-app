@@ -156,8 +156,12 @@ export default {
         localStorage.setItem('pleuro_rythme', this.data.rythme)
 
         this.success = true
-        // Increment
+
+        // Save data in localStorage
+        localStorage.setItem('pleuro_data', JSON.stringify(this.data))
         localStorage.setItem('pleuro_id', response.body.id)
+        // Increment
+        
         this.$parent.$data.next++
           console.log(response)
       }, response => {
