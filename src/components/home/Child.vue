@@ -2,7 +2,7 @@
 <div>
 
   <div class="row">
-    <div class="row info-exam" v-for="h in hemo" :key="h._id">
+    <div class="row info-exam hemo" v-for="h in hemo" :key="h._id">
       <h3>Examen Hemodynamique <span>{{h.createdAt}}</span></h3>
       <p>Pouls : {{h.pouls}}</p>
       <p>TA : {{h.ta}}</p>
@@ -16,7 +16,7 @@
       <p>Diurèse : {{h.diurese}}</p>
       <p>Cardiac Auscultation : {{h.auscu_card}}</p>
     </div>
-    <div class="row info-exam" v-for="p in pleuro" :key="p._id">
+    <div class="row info-exam pleuro" v-for="p in pleuro" :key="p._id">
       <h3>Examen Pleuro-pulmonaire <span>{{p.createdAt}}</span></h3>
       <p>FR : {{p.fr}}</p>
       <p>Amplitude : {{p.amplitude}}</p>
@@ -29,7 +29,7 @@
       <p>Bruit : {{p.bruit}}</p>
       <p>Toux : {{p.toux}}</p>
     </div>
-    <div class="row info-exam" v-for="n in neuro" :key="n._id">
+    <div class="row info-exam neuro" v-for="n in neuro" :key="n._id">
       <h3>Examen Neurologique <span>{{n.createdAt}}</span></h3>
       <p>Ouverture des yeux : {{n.param1}}</p>
       <p>Meilleure réaction verbale : {{n.param2}}</p>
@@ -112,6 +112,10 @@ export default {
       this.$router.push({
         name: 'Clinical'
       })
+  },
+  fetch_date(date) {
+      var foo = new Date("2012-07-14T01:00:00+01:00")
+      return foo
   }
 
   }
@@ -126,17 +130,17 @@ export default {
 
 }
 
-.info-exam:nth-child(1){
+.info-exam.hemo{
     border: 3px solid #c0392b;
     border-radius: 5px;
 }
 
-.info-exam:nth-child(2){
+.info-exam.pleuro {
     border: 3px solid #f39c12;
     border-radius: 5px;
 }
 
-.info-exam:nth-child(3){
+.info-exam.neuro{
     border: 3px solid #2980b9;
     border-radius: 5px;
 }

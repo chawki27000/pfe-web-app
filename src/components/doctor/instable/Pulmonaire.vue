@@ -14,21 +14,26 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Amplitude</label>
         <div class="col-md-6">
-          <select name="selectbasic" class="form-control" v-model="data.amplitude">
-                        <option value="1">Normal</option>
-                        <option value="2">Decreased</option>
-                        <option value="3">Increased</option>
-                        <option value="0">Null</option>
-                    </select>
+            <select name="selectbasic" class="form-control" v-model="data.amplitude">
+                <option value="1">Normal</option>
+                <option value="2">Decreased</option>
+                <option value="3">Increased</option>
+                <option value="0">Null</option>
+            </select>
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-md-3 control-label">SpO2 (%)</label>
         <div class="col-md-6">
-          <input type="number" min="0" max="100" class="form-control input-md" required="true" v-model.number="data.spo2">
+          <select name="selectbasic" class="form-control" v-model.number="data.spo2">
+                <option value="1">Supérieur à 95% (Bonne)</option>
+                <option value="2">95%-90% (insuffisance respiratoire)</option>
+                <option value="3">Inférieur à 90% (détresse respiratoire)</option>
+            </select>
         </div>
       </div>
+
 
       <div class="form-group">
         <label class="col-md-3 control-label">FiO2 (%)</label>
@@ -40,12 +45,12 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Respiration rhythm</label>
         <div class="col-md-6">
-          <select name="selectbasic" class="form-control" v-model="data.rythme">
-                        <option value="normal">Normal</option>
-                        <option value="sighs">Sighs</option>
-                        <option value="periodic">Periodic</option>
-                        <option value="irregular">Irregular</option>
-                    </select>
+            <select name="selectbasic" class="form-control" v-model="data.rythme">
+                <option value="normal">Normal</option>
+                <option value="sighs">Sighs</option>
+                <option value="periodic">Periodic</option>
+                <option value="irregular">Irregular</option>
+            </select>
         </div>
       </div>
 
@@ -59,12 +64,12 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Signes de lutte</label>
         <div class="col-md-6">
-          <select name="selectbasic" class="form-control" multiple v-model="data.sign_lutte">
-                        <option value="tirage">Tirage</option>
-                        <option value="battement">Battement des ailes du nez</option>
-                        <option value="epuisement">Epuisement</option>
-                        <option value="balancement">Balancement thoraco-abdominal</option>
-                    </select>
+            <select name="selectbasic" class="form-control" multiple v-model="data.sign_lutte">
+                <option value="tirage">Tirage</option>
+                <option value="battement">Battement des ailes du nez</option>
+                <option value="epuisement">Epuisement</option>
+                <option value="balancement">Balancement thoraco-abdominal</option>
+            </select>
         </div>
       </div>
 
@@ -80,7 +85,7 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Bruit</label>
         <div class="col-md-6">
-            <select name="selectbasic" class="form-control" v-model="data.bruit">
+          <select name="selectbasic" class="form-control" v-model="data.bruit">
                 <option value="absent">Absent</option>
                 <option value="stridor">Stridor</option>
                 <option value="cornage">Cornage</option>
@@ -92,7 +97,7 @@
       <div class="form-group">
         <label class="col-md-3 control-label">Toux</label>
         <div class="col-md-6">
-            <select name="selectbasic" class="form-control" v-model="data.toux">
+          <select name="selectbasic" class="form-control" v-model="data.toux">
                 <option value="absent">Absent</option>
                 <option value="seche">Sèche</option>
                 <option value="aigue">Aiguë</option>
@@ -114,7 +119,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -123,7 +127,7 @@ export default {
         child: localStorage.getItem('child_id'),
         fr: 0,
         amplitude: '',
-        spo2: 0,
+        spo2: 1,
         fio2: 0,
         rythme: '',
         cyanose: false,

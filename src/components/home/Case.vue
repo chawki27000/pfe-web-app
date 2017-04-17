@@ -39,29 +39,17 @@ export default {
     return {
       token: localStorage.getItem('token'),
       username: localStorage.getItem('username'),
-      childs: {}
+      childs: []
     }
+  },
+  mounted() {
+      var resource = this.$resource('child/all')
+      resource.get().then(response => {
+          console.log(response.body.data);
+          this.childs = response.body.data
+      })
   },
 
-  apollo: {
-    childs: {
-      query: gql `
-            query Childs{
-                childs {
-                    _id
-                    age {
-                          num
-                          types
-                        }
-                    weight
-                    gender
-                    school_mother
-                    school_father
-                    address_parent
-                }
-            }`
-    }
-  },
   methods: {
     detail(id) {
       // Save child_id in localStorage

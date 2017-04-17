@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
       <h1>STABLE</h1>
       <p>Information enfant</p>
       <p>Information toxicité</p>
@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 export default {
 }
 </script>

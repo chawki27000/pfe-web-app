@@ -64,7 +64,7 @@ export default {
         }
     },
     mounted () {
-        var resource_result = this.$resource('result/query{/id}')
+        var resource_result = this.$resource('result/query/id{/id}')
         var result_id = localStorage.getItem('result_id')
 
         // extract Result DATA
@@ -84,9 +84,10 @@ export default {
             }
 
             // TRC state
-            var trc = localStorage.getItem('hemo_trc')
+            var trc = parseInt(localStorage.getItem('hemo_trc'))
+            console.log("TRC : ", trc);
             if (trc > 3) {
-                this.trc = 3
+                this.trc = true
             }
 
             // neuro state
@@ -94,29 +95,34 @@ export default {
         })
     },
     methods: {
-        back() {
-            this.$parent.$data.next = 1
-        },
         send(feedback) {
+            console.log(feedback);
+            var result_id = localStorage.getItem('result_id')
+            var resource_result = this.$resource('result/update')
+            // send data to backEnd
+            resource_result.save({
+                id: result_id,
+                feedback: feedback
+            }).then(response => {
+                console.log(response);
+                if (response.body.success){
+                    console.log("SUCESS");
+                }
+                else {
+                    console.log("FAIL");
+                }
+            })
+
             if (feedback === 'improve'){
+                // Redirect
                 this.$router.push({name: 'Stable'})
             }
             else if (feedback === 'complication' || feedback === 'fail') {
-                console.log("abdeka");
-                this.back()
+                // Save data in localStorage
+                localStorage.setItem('exam', 1)
+                // Redirect
+                this.$router.push({name: 'Clinical'})
             }
-            // var result_id = localStorage.getItem('result_id')
-            // var resource_result = this.$resource('result/update{/id}{/param}')
-            //
-            // resource_result.get({id: result_id, param: feedback}).then(response => {
-            //     console.log(response);
-            //     if (response.body.success){
-            //         console.log("SUCESS");
-            //     }
-            //     else {
-            //         console.log("FAIL");
-            //     }
-            // })
 
         }
     }

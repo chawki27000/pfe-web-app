@@ -3,7 +3,7 @@
         <div class="row child-info">
             <div class="title">Information</div>
             <div>
-                <h3>Age :</h3> <p>{{child_d.age}} {{child_d.types}}</p><br>
+                <h3>Age :</h3> <p>{{child_d.age.nom}} {{child_d.age.types}}</p><br>
                 <h3>Poids :</h3> <p>{{child_d.weight}} kg</p><br>
                 <h3>Sexe :</h3> <p>{{child_d.gender}}</p>
             </div>
@@ -37,8 +37,11 @@
                 <p>{{pleuro.ampl}}</p>
               </div>
               <div class="info">
-                <h3>Resp : </h3>
+                <h3>Respiration : </h3>
                 <p>{{pleuro.resp}}</p>
+              </div>
+              <div class="info" v-if="this.pleuro_d.spo2 == 3">
+                <p style="color: #c0392b">signes d’hypoxémie</p>
               </div>
             </section>
 
@@ -158,7 +161,15 @@ export default {
     })
 
     // Child data
-    this.child_d = JSON.parse(localStorage.getItem('child_data'))
+
+    var resource3 = this.$resource('child/query{/id}')
+    resource3.get({id: localStorage.getItem('child_id')}).then(response => {
+        this.child_d = response.body.data
+        console.log(response.body.data);
+    })
+
+    // localStorage data
+    // this.child_d = JSON.parse(localStorage.getItem('child_data'))
     this.hemo_d = JSON.parse(localStorage.getItem('hemo_data'))
     this.pleuro_d = JSON.parse(localStorage.getItem('pleuro_data'))
     this.neuro_d = JSON.parse(localStorage.getItem('neuro_data'))
@@ -223,7 +234,7 @@ export default {
 section {
   margin: 15px;
   margin-bottom: 30px;
-  height: 50vh;
+  height: 53vh;
   border: 2px solid grey;
   padding-top: 20px;
   border-radius: 4px;
