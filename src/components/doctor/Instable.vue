@@ -43,6 +43,13 @@
       <p></p>
     </section>
   </div>
+  <div class="row">
+      <section>
+        <h2>Remarque du medecin</h2>
+        <textarea name="name" rows="8" cols="80" v-model="comment"
+        placeholder="Remarque ou commentaire au sujet du patient"></textarea>
+      </section>
+  </div>
     <div class="row btns">
         <a @click="send('improve')">Amélioration</a>
         <a @click="send('complication')">Complication</a>
@@ -60,7 +67,8 @@ export default {
             emergency: false,
             airway: false,
             trc: false,
-            neuro: false
+            neuro: false,
+            comment: '',
         }
     },
     mounted () {
@@ -102,7 +110,8 @@ export default {
             // send data to backEnd
             resource_result.save({
                 id: result_id,
-                feedback: feedback
+                feedback: feedback,
+                comment: this.comment
             }).then(response => {
                 console.log(response);
                 if (response.body.success){
@@ -232,6 +241,20 @@ section {
 .btns a:active {
     text-decoration: none;
     background: #f6f7f9;
+}
+
+textarea {
+    resize: none;
+    margin: 15px auto;
+    width: 60%;
+    font-size: 130%;
+    border: 2px solid #16a085;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+textarea:focus {
+    outline: none !important;
 }
 
 </style>

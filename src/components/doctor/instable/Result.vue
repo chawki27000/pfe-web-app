@@ -221,9 +221,7 @@ export default {
     instable() {
       this.send()
       // Next
-      this.$router.push({
-        name: 'Instable'
-      })
+      this.$router.push({name: 'Instable'})
     }
   }
 
