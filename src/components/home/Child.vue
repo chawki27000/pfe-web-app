@@ -1,5 +1,9 @@
 <template>
 <div>
+  <div class="row btns">
+    <a @click="exam">Exam <i class="ion-android-refresh"></i></a>
+    <a @click="stable">Stable <i class="ion-android-happy"></i></a>
+  </div>
 
   <div class="row">
     <div class="row info-exam hemo" v-for="h in hemo" :key="h._id">
@@ -37,9 +41,6 @@
     </div>
   </div>
 
-  <div class="row btns">
-      <a @click="exam">Exam <i class="ion-android-refresh"></i></a>
-  </div>
 </div>
 </template>
 
@@ -103,8 +104,8 @@ export default {
       }).then(response => {
         this.neuro.push(response.body.data)
       })
-  },
-  exam () {
+    },
+    exam() {
       // Save data in localStorage
       localStorage.setItem('child_id', this.result[0].child)
       localStorage.setItem('exam', 1)
@@ -112,11 +113,17 @@ export default {
       this.$router.push({
         name: 'Clinical'
       })
-  },
-  fetch_date(date) {
+    },
+    stable() {
+      // Redirect
+      this.$router.push({
+        name: 'Stable'
+      })
+    },
+    fetch_date(date) {
       var foo = new Date("2012-07-14T01:00:00+01:00")
       return foo
-  }
+    }
 
   }
 }
@@ -187,7 +194,16 @@ export default {
 .btns a:hover,
 .btns a:active {
     text-decoration: none;
-    background: #bf6516 !important;
+    background-color: #bf6516 !important;
+}
+
+.btns a:nth-child(2) {
+    background-color: #27ae60 !important;
+}
+
+.btns a:nth-child(2):hover,
+.btns a:nth-child(2):active {
+    background-color: #219251 !important;
 }
 
 i {
