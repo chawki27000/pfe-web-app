@@ -52,8 +52,20 @@
   </div>
     <div class="row btns">
         <a @click="send('improve')">Amélioration</a>
-        <a @click="send('complication')">Complication</a>
-        <a @click="send('fail')">Echec</a>
+        <a @click="func('complication')">Complication</a>
+        <a @click="func('fail')">Echec</a>
+    </div>
+
+    <div class="row" v-if="compl">
+        <section>
+            <h2>Remarque sur la complication ou l'echec</h2>
+            <textarea name="name" rows="8" cols="80" v-model="explanation"
+            placeholder="Explication ou remarque sur la compilcation ou l'echec du traitement"></textarea>
+        </section>
+
+        <div class="row btns">
+            <a @click="lets">Confirmation</a>
+        </div>
     </div>
 
 </div>
@@ -68,15 +80,18 @@ export default {
             airway: false,
             trc: false,
             neuro: false,
+            compl: false,
             comment: '',
+            explanation: '',
         }
     },
     mounted () {
         var resource_result = this.$resource('result/query/id{/id}')
         var result_id = localStorage.getItem('result_id')
-
+        console.log("INSTABLE : avant GET");
         // extract Result DATA
         resource_result.get({id: result_id}).then(response => {
+            console.log("INSTABLE : callback");
             // emergency state
             var cynose = localStorage.getItem('pleuro_cynose')
             if (response.body.data.hemo.fc === "Bradycardie" ||
@@ -97,7 +112,6 @@ export default {
             if (trc > 3) {
                 this.trc = true
             }
-
             // neuro state
             // TODO: Neuro
         })
@@ -111,7 +125,8 @@ export default {
             resource_result.save({
                 id: result_id,
                 feedback: feedback,
-                comment: this.comment
+                comment: this.comment,
+                explanation: this.explanation,
             }).then(response => {
                 console.log(response);
                 if (response.body.success){
@@ -133,6 +148,15 @@ export default {
                 this.$router.push({name: 'Clinical'})
             }
 
+        },
+        lets() {
+            var feedback = localStorage.getItem('feedback')
+            this.send(feedback)
+        },
+        func(feedback) {
+            console.log(feedback);
+            localStorage.setItem('feedback', feedback)
+            this.compl = true
         }
     }
 }

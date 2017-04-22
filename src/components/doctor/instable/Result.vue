@@ -3,7 +3,7 @@
         <div class="row child-info">
             <div class="title">Information</div>
             <div>
-                <h3>Age :</h3> <p>{{child_d.age.nom}} {{child_d.age.types}}</p><br>
+                <h3>Age :</h3> <p>{{child_d.age.num}} {{child_d.age.types}}</p><br>
                 <h3>Poids :</h3> <p>{{child_d.weight}} kg</p><br>
                 <h3>Sexe :</h3> <p>{{child_d.gender}}</p>
             </div>
@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-md-8">
             <section class="hemo">
-              <h2>Resultat Hedomynamique</h2>
+              <h2>Resultat Hemodynamique</h2>
               <div class="info">
                 <h3>FC : </h3>
                 <p>{{hemo.fc}}</p>
@@ -29,7 +29,7 @@
             <section class="pleuro">
               <h2>Resultat Pleuro-pulmonaire</h2>
               <div class="info">
-                <h3>FC : </h3>
+                <h3>FR : </h3>
                 <p>{{pleuro.fr}}</p>
               </div>
               <div class="info">
