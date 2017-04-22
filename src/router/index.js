@@ -8,6 +8,7 @@ import Information from '@/components/home/Information'
 import Clinical from '@/components/home/Clinical'
 import Case from '@/components/home/Case'
 import Child from '@/components/home/Child'
+import List from '@/components/home/List'
 
 import User from '@/components/admin/User'
 import Hospital from '@/components/admin/Hospital'
@@ -55,6 +56,11 @@ export default new Router({
               path: '/child',
               name: 'Child',
               component: Child
+          },
+          {
+              path: '/list',
+              name: 'List',
+              component: List
           },
           {
               path: '/user',

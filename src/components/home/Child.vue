@@ -1,43 +1,47 @@
 <template>
 <div>
-  <div class="row btns">
-    <a @click="exam">Exam <i class="ion-android-refresh"></i></a>
-    <a @click="stable">Stable <i class="ion-android-happy"></i></a>
-  </div>
+
 
   <div class="row">
-    <div class="row info-exam hemo" v-for="h in hemo" :key="h._id">
-      <h3>Examen Hemodynamique <span>{{h.createdAt}}</span></h3>
-      <p>Pouls : {{h.pouls}}</p>
-      <p>TA : {{h.ta}}</p>
-      <p>Marbrure : {{h.marbrure}}</p>
-      <p>TRC : {{h.trc}}</p>
-      <p>Temperature des extremités : {{h.extr_temp}}</p>
-      <p>Temperature : {{h.temp}}</p>
-      <p>Turgescence jugulaire : {{h.turg_jugul}}</p>
-      <p>Reflux hépato-jugulaire : {{h.hepat_jugul}}</p>
-      <p>PVC : {{h.pres_vein}}</p>
-      <p>Diurèse : {{h.diurese}}</p>
-      <p>Cardiac Auscultation : {{h.auscu_card}}</p>
+      <div class="row info-exam result">
+          <h3>Resultat</h3><br>
+          <p>Date : {{result.createdAt}}</p><br>
+          <p>Etat : {{result.feedback}}</p><br>
+          <p>Commentaire : {{result.comment}}</p><br>
+          <p>Explication : {{result.explanation}}</p>
+      </div>
+    <div class="row info-exam hemo">
+      <h3>Examen Hemodynamique</h3>
+      <p>Pouls : {{hemo.pouls}}</p>
+      <p>TA : {{hemo.ta}}</p>
+      <p>Marbrure : {{hemo.marbrure}}</p>
+      <p>TRC : {{hemo.trc}}</p>
+      <p>Temperature des extremités : {{hemo.extr_temp}}</p>
+      <p>Temperature : {{hemo.temp}}</p>
+      <p>Turgescence jugulaire : {{hemo.turg_jugul}}</p>
+      <p>Reflux hépato-jugulaire : {{hemo.hepat_jugul}}</p>
+      <p>PVC : {{hemo.pres_vein}}</p>
+      <p>Diurèse : {{hemo.diurese}}</p>
+      <p>Cardiac Auscultation : {{hemo.auscu_card}}</p>
     </div>
-    <div class="row info-exam pleuro" v-for="p in pleuro" :key="p._id">
-      <h3>Examen Pleuro-pulmonaire <span>{{p.createdAt}}</span></h3>
-      <p>FR : {{p.fr}}</p>
-      <p>Amplitude : {{p.amplitude}}</p>
-      <p>SpO2 : {{p.spo2}}</p>
-      <p>FiO2 : {{p.fio2}}</p>
-      <p>Rythme Respiratoire : {{p.rythme}}</p>
-      <p>Cyanose : {{p.cyanose}}</p>
-      <p>Signes de lutte : {{p.sign_lutte}}</p>
-      <p>Sueur : {{p.sueur}}</p>
-      <p>Bruit : {{p.bruit}}</p>
-      <p>Toux : {{p.toux}}</p>
+    <div class="row info-exam pleuro">
+      <h3>Examen Pleuro-pulmonaire</h3>
+      <p>FR : {{pleuro.fr}}</p>
+      <p>Amplitude : {{pleuro.amplitude}}</p>
+      <p>SpO2 : {{pleuro.spo2}}</p>
+      <p>FiO2 : {{pleuro.fio2}}</p>
+      <p>Rythme Respiratoire : {{pleuro.rythme}}</p>
+      <p>Cyanose : {{pleuro.cyanose}}</p>
+      <p>Signes de lutte : {{pleuro.sign_lutte}}</p>
+      <p>Sueur : {{pleuro.sueur}}</p>
+      <p>Bruit : {{pleuro.bruit}}</p>
+      <p>Toux : {{pleuro.toux}}</p>
     </div>
-    <div class="row info-exam neuro" v-for="n in neuro" :key="n._id">
-      <h3>Examen Neurologique <span>{{n.createdAt}}</span></h3>
-      <p>Ouverture des yeux : {{n.param1}}</p>
-      <p>Meilleure réaction verbale : {{n.param2}}</p>
-      <p>Meilleure réaction motrice : {{n.param3}}</p>
+    <div class="row info-exam neuro">
+      <h3>Examen Neurologique</h3>
+      <p>Ouverture des yeux : {{neuro.param1}}</p>
+      <p>Meilleure réaction verbale : {{neuro.param2}}</p>
+      <p>Meilleure réaction motrice : {{neuro.param3}}</p>
     </div>
   </div>
 
@@ -49,10 +53,10 @@ export default {
   data() {
     return {
       detail_id: '',
-      result: [],
-      hemo: [],
-      pleuro: [],
-      neuro: [],
+      result: {},
+      hemo: {},
+      pleuro: {},
+      neuro: {},
     }
   },
   created() {
@@ -67,18 +71,16 @@ export default {
 
   methods: {
     getRes(id) {
-      var resource = this.$resource('result/query{/id}');
+      var resource = this.$resource('result/query/id{/id}');
       resource.get({
         id: id
       }).then(response => {
         this.result = response.body.data
-        console.log("before loop, ", this.result.length);
-        // for loop to explore the result tab
-        for (var i = 0; i < this.result.length; i++) {
-          this.getHemo(this.result[i].hemo_id)
-          this.getPleuro(this.result[i].pleuro_id)
-          this.getNeuro(this.result[i].neuro_id)
-        }
+        // get other clinal information
+          this.getHemo(this.result.hemo_id)
+          this.getPleuro(this.result.pleuro_id)
+          this.getNeuro(this.result.neuro_id)
+
       })
     },
     getHemo(id) {
@@ -86,7 +88,7 @@ export default {
       resource.get({
         id: id
       }).then(response => {
-        this.hemo.push(response.body.data)
+        this.hemo = response.body.data
       })
     },
     getPleuro(id) {
@@ -94,7 +96,7 @@ export default {
       resource.get({
         id: id
       }).then(response => {
-        this.pleuro.push(response.body.data)
+        this.pleuro = response.body.data
       })
     },
     getNeuro(id) {
@@ -102,22 +104,7 @@ export default {
       resource.get({
         id: id
       }).then(response => {
-        this.neuro.push(response.body.data)
-      })
-    },
-    exam() {
-      // Save data in localStorage
-      localStorage.setItem('child_id', this.result[0].child)
-      localStorage.setItem('exam', 1)
-      // Redirect
-      this.$router.push({
-        name: 'Clinical'
-      })
-    },
-    stable() {
-      // Redirect
-      this.$router.push({
-        name: 'Stable'
+        this.neuro = response.body.data
       })
     },
     fetch_date(date) {
@@ -167,46 +154,35 @@ export default {
     font-size: 70%;
 }
 
-.btns {
-    margin: 20px 0;
-    text-align: center;
-    font-size: 130%;
+.result h3, .result p{
+    display: inline-block;
+    margin: 8px auto;
 }
 
-.btns a {
-    background-color: #e67e22 !important;
-    text-decoration: none !important;
-    border-radius: 3px;
-    border: 1px solid #e67e22;
-    padding: 10px 30px;
-    font-size: 120%;
-    border: none;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, .2);
-    color: white !important;
-    font-weight: 400;
-    align-self: center;
-    transition: background-color 0.2s;
+.result h3 {
+    color: #95a5a6;
+    margin-right: 15px;
+}
+
+.result {
     width: 50%;
-    margin: 35px 20px 15px 20px;
+    margin: 0 auto;
     text-align: center;
+    font-size: 120%;
+    border: 5px solid #3498db;
+    border-radius: 8px;
 }
 
-.btns a:hover,
-.btns a:active {
-    text-decoration: none;
-    background-color: #bf6516 !important;
+.result div {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5%;
 }
 
-.btns a:nth-child(2) {
-    background-color: #27ae60 !important;
-}
-
-.btns a:nth-child(2):hover,
-.btns a:nth-child(2):active {
-    background-color: #219251 !important;
-}
-
-i {
-    margin-left: 5px;
+.result .title {
+    display: inline-block;
+    height: 100%;
+    color: #3498db;
+    font-size: 180%;
 }
 </style>

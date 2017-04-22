@@ -56,7 +56,7 @@ export default {
       localStorage.setItem('detail_id', id)
 
       // Redirect
-      this.$router.push('/child')
+      this.$router.push('/list')
     }
   }
 
