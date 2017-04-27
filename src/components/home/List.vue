@@ -16,7 +16,11 @@
       <tbody>
         <tr v-for="res in result" :key="res._id">
           <td>{{res.createdAt}}</td>
-          <td>{{res.feedback}}</td>
+          <td>
+              <span class="fail" v-if="res.feedback == 'fail'">fail</span>
+              <span class="improve" v-if="res.feedback == 'improve'">improve</span>
+              <span class="complication" v-if="res.feedback == 'complication'">complication</span>
+          </td>
           <td><a @click="detail(res._id)"><i class="ion-ios-pulse-strong"></i></a></td>
         </tr>
       </tbody>
@@ -117,5 +121,30 @@ export default {
 
 i {
     margin-left: 5px;
+}
+
+span.fail {
+    display: inline-block;
+    background-color: #e74c3c;
+    color: white;
+    padding: 2px;
+    width: 50%;
+    text-align: center;
+}
+span.complication {
+    display: inline-block;
+    background-color: #e67e22;
+    color: white;
+    padding: 2px;
+    width: 50%;
+    text-align: center;
+}
+span.improve {
+    display: inline-block;
+    background-color: #2ecc71;
+    color: white;
+    padding: 2px;
+    width: 50%;
+    text-align: center;
 }
 </style>

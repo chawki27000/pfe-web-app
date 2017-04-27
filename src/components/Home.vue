@@ -36,10 +36,10 @@
                 <ul class="nav navbar-nav side-nav">
                     <!-- Doctor Feature -->
                     <li v-if="user[0].role== 'Doctor'">
-                        <a href="#/clinical"><i class="ion-ios-pulse-strong"></i>Clinical</a>
+                        <a href="#/clinical"><i class="ion-ios-pulse-strong"></i> Clinical exam</a>
                     </li>
                     <li v-if="user[0].role== 'Doctor'">
-                        <a href="#/case" @click="fun"><i class="ion-medkit"></i> Case</a>
+                        <a href="#/case" @click="fun"><i class="ion-medkit"></i> Cases</a>
                     </li>
                     <!-- Admin Feature -->
                     <li v-if="user[0].role == 'Admin'">

@@ -89,9 +89,11 @@ export default {
         var resource_result = this.$resource('result/query/id{/id}')
         var result_id = localStorage.getItem('result_id')
         console.log("INSTABLE : avant GET");
+        console.log("result_id : "+result_id);
         // extract Result DATA
         resource_result.get({id: result_id}).then(response => {
             console.log("INSTABLE : callback");
+            console.log(response);
             // emergency state
             var cynose = localStorage.getItem('pleuro_cynose')
             if (response.body.data.hemo.fc === "Bradycardie" ||
@@ -105,7 +107,7 @@ export default {
             if (rythme === "sighs" || rythme === "irregular") {
                 this.airway = true
             }
-
+            
             // TRC state
             var trc = parseInt(localStorage.getItem('hemo_trc'))
             console.log("TRC : ", trc);
