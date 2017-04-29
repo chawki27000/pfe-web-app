@@ -3,23 +3,23 @@
   <h3>Information Toxicité</h3>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <form class="form-horizontal">
 
         <div class="form-group">
           <label class="col-md-3 control-label">Heure de prise</label>
           <div class="col-md-2">
-            <input type="number" min="0" max="23" class="form-control input-md" required="true">
+            <input type="number" min="0" max="23" class="form-control input-md" required="true" v-model.number="taken_hour.hour">
           </div>
           <div class="col-md-2">
-            <input type="number" min="0" max="59" class="form-control input-md" required="true">
+            <input type="number" min="0" max="59" class="form-control input-md" required="true" v-model.number="taken_hour.minute">
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-3 control-label">Place de la prise</label>
           <div class="col-md-6">
-            <select name="selectbasic" class="form-control">
+            <select name="selectbasic" class="form-control" v-model="taken_place">
                     <option value="cuisine">Cuisine</option>
                     <option value="sdb">Salle de bain</option>
                     <option value="ecole">Ecole</option>
@@ -31,7 +31,7 @@
         <div class="form-group">
           <label class="col-md-3 control-label">Seul (non surveillé)</label>
           <div class="col-md-6">
-            <input type="checkbox" class="form-control input-md">
+            <input type="checkbox" class="form-control input-md" v-model="alone">
           </div>
         </div>
 
@@ -52,28 +52,19 @@
         <div class="form-group">
           <label class="col-md-3 control-label">Diagnostique</label>
           <div class="col-md-6">
-            <textarea style="width: 100%; font-size: 100%;" name="name" rows="5" cols="800"></textarea>
+            <textarea style="width: 100%; font-size: 100%;" name="name" rows="5" cols="800" v-model="diagnostic"></textarea>
           </div>
         </div>
 
       </form>
 
     </div>
-    <div class="col-md-6">
-      <h3>Medicament</h3>
-      <!-- <div v-for="d in drugs" :key="d._id">
-        <p v-if="d.select">{{d.name}}</p>
-      </div> -->
-      {{drug_tab}}
-      <h3>Signes</h3>
-      {{sign_tab}}
-    </div>
   </div>
 
 
   <div class="row">
     <div class="col-md-12">
-      <a class="btn-next">Next<i class="ion-arrow-right-a"></i></a>
+      <a class="btn-next" @click="submit">Next<i class="ion-arrow-right-a"></i></a>
     </div>
   </div>
 
@@ -104,7 +95,6 @@
                 <td>{{d.category}}</td>
                 <td>
                   <input v-bind:id="'quantite_'+d._id" type="number" min="0" value="0">
-
                 </td>
               </tr>
             </tbody>
@@ -171,6 +161,14 @@ import gql from 'graphql-tag'
 export default {
   data() {
     return {
+      // Other data
+      taken_hour: {
+          hour: 0,
+          minute: 0
+      },
+      taken_place: '',
+      alone: false,
+      diagnostic: '',
       // Drug Data
       drugs: [],
       select_drug: [],
@@ -231,7 +229,7 @@ export default {
       this.sign_tab = []
       for (var i = 0; i < this.select_sign.length; i++) {
         // retreive
-        var e = document.getElementById('sign_'+this.select_sign[i]);
+        var e = document.getElementById('sign_' + this.select_sign[i]);
         var str = e.options[e.selectedIndex].value;
         // bluid a drug tab
         this.sign_tab.push({
@@ -240,6 +238,24 @@ export default {
         })
       }
     },
+    submit() {
+        var resource = this.$resource('case/insert');
+        resource.save({
+            doctor: localStorage.getItem('user_id'),
+            child: localStorage.getItem('detail_id'),
+            hour: this.taken_hour.hour,
+            minute: this.taken_hour.minute,
+            taken_place: this.taken_place,
+            alone: this.alone,
+            drugs: this.drug_tab,
+            sign: this.sign_tab,
+            diagnostic: this.diagnostic
+        }).then(response => {
+            console.log("SUCESS");
+        }, response => {
+            console.error(response)
+        })
+    }
   }
 }
 </script>

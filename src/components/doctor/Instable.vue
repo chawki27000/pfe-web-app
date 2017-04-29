@@ -12,12 +12,12 @@
       <h2>Voie aérienne</h2>
       <p class="alert">Cyanose ou détresse respiratoire sévère</p>
       <div class="row photo">
-          <p>Dégager les voies aériennes</p>
-          <img src="../../../static/img/instable/diag_4.png">
+          <p>Dégager les voies aériennes.<br>
+          <a target="_blank" href="../../../static/img/instable/diag_4.png">Cliquez pour les details</a></p>
       </div>
       <div class="row photo">
-          <p>Administrer de l'oxygène</p>
-          <img src="../../../static/img/instable/diag_5.png">
+          <p>Administrer de l'oxygène.<br>
+          <a target="_blank" href="../../../static/img/instable/diag_5.png">Cliquez pour les details</a></p>
       </div>
       <p class="parag">Garder l'enfant au chaud</p>
     </section>
@@ -27,12 +27,15 @@
       <h2>Temps de recoloration</h2>
       <div class="row photo">
           <p>Administrer de l'oxygène</p>
-          <img src="../../../static/img/instable/diag_5.png">
+          <p class="detail">Administrer de l'oxygène au moyen de lunettes nasales ou d'une sonde nasale.<br>
+          <a target="_blank" href="../../../static/img/instable/diag_5.png">Cliquez pour les details</a></p>
       </div>
       <p class="parag">Garder l'enfant au chaud </p>
       <div class="row photo">
           <p>Rechercher une veine et commencer à  administrer rapidement des liquide </p>
-          <img src="../../../static/img/instable/diag_7.png">
+          <p class="detail">Administration rapide de liquides IV en cas de chc chez un enfant qui ne
+          présente pas de signes de malnutrition grave.<br>
+          <a target="_blank" href="../../../static/img/instable/diag_7.png">Cliquez pour les details</a></p>
       </div>
       <p class="alert">Rappel: S'il n'est pas possible de poser une voie IV périphérique, placer une perfusion dans la jugulaire externe ou en intra-osseuse</p>
     </section>
@@ -92,9 +95,8 @@ export default {
         console.log("result_id : "+result_id);
         // extract Result DATA
         resource_result.get({id: result_id}).then(response => {
-            console.log("INSTABLE : callback");
             console.log(response);
-            // emergency state
+            // // emergency state
             var cynose = localStorage.getItem('pleuro_cynose')
             if (response.body.data.hemo.fc === "Bradycardie" ||
                 response.body.data.hemo.fc === "Tachycardie" ||
@@ -107,7 +109,7 @@ export default {
             if (rythme === "sighs" || rythme === "irregular") {
                 this.airway = true
             }
-            
+
             // TRC state
             var trc = parseInt(localStorage.getItem('hemo_trc'))
             console.log("TRC : ", trc);
@@ -192,7 +194,7 @@ section {
 }
 
 
-.photo img {
+.photo.img {
     display: inline-block;
     width: 550px;
 }
@@ -281,6 +283,10 @@ textarea {
 
 textarea:focus {
     outline: none !important;
+}
+
+.detail {
+    font-size: 100% !important;
 }
 
 </style>

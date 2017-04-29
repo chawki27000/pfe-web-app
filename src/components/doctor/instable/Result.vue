@@ -49,7 +49,7 @@
               <h2>Resultat neurologique</h2>
               <div class="info">
                 <h3>Score : </h3>
-                <p>{{neuro.res}}</p>
+                <p>O{{this.neuro_d.param1}} V{{this.neuro_d.param2}} M{{this.neuro_d.param3}}</p>
               </div>
             </section>
 

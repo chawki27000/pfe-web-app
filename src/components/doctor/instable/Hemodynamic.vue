@@ -15,7 +15,12 @@
       <div class="form-group">
         <label class="col-md-3 control-label">TA (mmHg)</label>
         <div class="col-md-6">
-          <input type="number" min="0" class="form-control input-md" required="true" v-model.number="data.ta">
+          <select name="selectbasic" class="form-control" v-model.number="data.ta">
+                        <option value="120">Entre 100 et 150</option>
+                        <option value="160">Supérieur à 150</option>
+                        <option value="80">Entre 60 et 100</option>
+                        <option value="40">Inférieur à 60</option>
+                    </select>
         </div>
       </div>
 
