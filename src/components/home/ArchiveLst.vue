@@ -1,9 +1,6 @@
 <template>
 <div>
-  <div class="row btns">
-    <a @click="exam">Exam <i class="ion-android-refresh"></i></a>
-    <a @click="stable">Stable <i class="ion-android-happy"></i></a>
-  </div>
+
   <div class="row">
     <table class="table table-striped">
       <thead>
@@ -25,34 +22,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
-  <div class="row btns" >
-      <a style="background-color:#2c3e50 !important;" data-toggle="modal" data-target="#idModal">Sortie<i class="ion-android-walk"></i></a>
-  </div>
-
-  <!-- Modal Declaration -->
-  <!-- Modal -->
-  <div class="modal fade" id="idModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Constat de sortie</h4>
-        </div>
-        <div class="modal-body">
-
-          <div class="row btns">
-              <a @click="state('normal')" style="background-color:#2ecc71 !important;" data-dismiss="modal">Normal</a>
-              <a @click="state('sequel')" style="background-color:#f39c12 !important;" data-dismiss="modal">Sequelle</a>
-              <a @click="state('death')" style="background-color:#2c3e50 !important;" data-dismiss="modal">Decès</a>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
   </div>
 
 </div>
@@ -89,39 +58,6 @@ export default {
       // Redirect
       this.$router.push('/child')
     },
-    exam() {
-      // Save data in localStorage
-      localStorage.setItem('child_id', this.result[0].child)
-      localStorage.setItem('exam', 1)
-      // Redirect
-      this.$router.push({
-        name: 'Clinical'
-      })
-    },
-    stable() {
-      // Redirect
-      this.$router.push({
-        name: 'Stable'
-      })
-    },
-    state(state) {
-        // Save child_id in localStorage
-        var id = localStorage.getItem('detail_id')
-        var resource = this.$resource('child/update');
-
-        resource.save({
-            id: id,
-            state: state
-        }).then(response => {
-            console.log(response);
-            if (response.body.success) {
-                // Redirect
-                this.$router.push({name: 'Case'})
-            }
-        }, response => {
-            console.error(response);
-        })
-    }
   }
 }
 </script>

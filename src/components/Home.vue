@@ -41,6 +41,10 @@
                     <li v-if="user[0].role== 'Doctor'">
                         <a href="#/case" @click="fun"><i class="ion-medkit"></i> Cases</a>
                     </li>
+
+                    <li v-if="user[0].role== 'Doctor'">
+                        <a href="#/archive" @click="fun"><i class="ion-ios-book"></i> Archives</a>
+                    </li>
                     <!-- Admin Feature -->
                     <li v-if="user[0].role == 'Admin'">
                         <a href="#/user"><i class="ion-person"></i> User</a>

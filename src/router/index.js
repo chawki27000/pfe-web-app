@@ -9,6 +9,8 @@ import Clinical from '@/components/home/Clinical'
 import Case from '@/components/home/Case'
 import Child from '@/components/home/Child'
 import List from '@/components/home/List'
+import Archive from '@/components/home/Archive'
+import ArchiveLst from '@/components/home/ArchiveLst'
 
 import User from '@/components/admin/User'
 import Hospital from '@/components/admin/Hospital'
@@ -61,6 +63,16 @@ export default new Router({
               path: '/list',
               name: 'List',
               component: List
+          },
+          {
+              path: '/archive',
+              name: 'Archive',
+              component: Archive
+          },
+          {
+              path: '/archiveLst',
+              name: 'ArchiveLst',
+              component: ArchiveLst
           },
           {
               path: '/user',
