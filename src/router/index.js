@@ -19,6 +19,8 @@ import Drug from '@/components/admin/Drug'
 import Stable from '@/components/doctor/Stable'
 import Instable from '@/components/doctor/Instable'
 
+import Paracetamol from '@/components/doctor/expert/Paracetamol'
+
 
 Vue.use(Router)
 
@@ -98,7 +100,12 @@ export default new Router({
               path: '/instable',
               name: 'Instable',
               component: Instable,
-          }
+          },
+          {
+              path: '/paracetamol',
+              name: 'Paracetamol',
+              component: Paracetamol,
+          },
       ]
   },
 

@@ -49,13 +49,6 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="col-md-3 control-label">Diagnostique</label>
-          <div class="col-md-6">
-            <textarea style="width: 100%; font-size: 100%;" name="name" rows="5" cols="800" v-model="diagnostic"></textarea>
-          </div>
-        </div>
-
       </form>
 
     </div>
@@ -71,8 +64,8 @@
   <!-- Modal Declaration -->
   <!-- Modal -->
   <div class="modal fade" id="drugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+    <div style="width: 48%;" class="modal-dialog" role="document">
+      <div style="width: 112%;" class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Ajouter un medicament</h4>
@@ -84,6 +77,7 @@
               <tr>
                 <th>Selection</th>
                 <th>Nom</th>
+                <th>Masse</th>
                 <th>Categorie</th>
                 <th>Quantité</th>
               </tr>
@@ -92,9 +86,12 @@
               <tr v-for="d in drugs" :key="d._id">
                 <td><input type="checkbox" @click="addDrug(d._id)"></td>
                 <td>{{d.name}}</td>
+                <td>{{d.masse}} mg</td>
                 <td>{{d.category}}</td>
                 <td>
                   <input v-bind:id="'quantite_'+d._id" type="number" min="0" value="0">
+                </td>
+                <td>
                 </td>
               </tr>
             </tbody>
@@ -163,18 +160,20 @@ export default {
     return {
       // Other data
       taken_hour: {
-          hour: 0,
-          minute: 0
+        hour: 0,
+        minute: 0
       },
       taken_place: '',
       alone: false,
-      diagnostic: '',
       // Drug Data
       drugs: [],
       select_drug: [],
       drug_tab: [],
       // Sign data
-      sign: ['brulure', 'ecchymose', 'hémorragie'],
+      sign: ['Coma', 'Convulsions', 'Myosis', 'Mydriase', 'Agitation', 'Hallucinations', 'Fièvre',
+        'Myoclonies', 'Tremblements', 'Dysarthrie', 'Confusion', 'Paralysie', 'Céphalées',
+        'Insomnie', 'Hyperréfléxie', 'Hypokaliémie', 'Palpitation', 'Bronchorrhée', 'Bronchospasme',
+        'Bloc auriculo-ventriculaire', 'QT long', 'Trouble de rythme', 'Insuffisance cardiaque', 'Vomissements', 'Diarrhées', 'Douleurs Abdominales', 'Constipation', 'Frisson', 'Rétention Urinaire', 'IRA', 'Insuffisance hépatique', 'Hypoglycémie', 'Hyperglycémie', 'Alcalose', 'Acidose', 'Hypokaliémie', 'Myosis', 'Somnolence', 'Ictère cutano muqueux'],
       select_sign: [],
       sign_tab: [],
     }
@@ -209,11 +208,15 @@ export default {
     },
     submitDrug() {
       this.drug_tab = []
+      var e = ''
+      var str = ''
       for (var i = 0; i < this.select_drug.length; i++) {
         // bluid a drug tab
+        e = document.getElementById('dose_' + this.select_drug[i]);
+
         this.drug_tab.push({
           id: this.select_drug[i],
-          val: document.getElementById('quantite_' + this.select_drug[i]).value
+          val: document.getElementById('quantite_' + this.select_drug[i]).value,
         })
       }
     },
@@ -227,34 +230,44 @@ export default {
     },
     submitSign() {
       this.sign_tab = []
+      var e = ''
+      var str
       for (var i = 0; i < this.select_sign.length; i++) {
         // retreive
-        var e = document.getElementById('sign_' + this.select_sign[i]);
-        var str = e.options[e.selectedIndex].value;
+        e = document.getElementById('sign_' + this.select_sign[i]);
+        str = e.options[e.selectedIndex].value;
         // bluid a drug tab
         this.sign_tab.push({
           sign: this.select_sign[i],
           val: parseInt(str)
         })
       }
+
+        var resource = this.$resource('toxidrome/get');
+        resource.save({
+            child: localStorage.getItem('detail_id'),
+            sign: this.sign_tab,
+        })
     },
     submit() {
-        var resource = this.$resource('case/insert');
-        resource.save({
-            doctor: localStorage.getItem('user_id'),
-            child: localStorage.getItem('detail_id'),
-            hour: this.taken_hour.hour,
-            minute: this.taken_hour.minute,
-            taken_place: this.taken_place,
-            alone: this.alone,
-            drugs: this.drug_tab,
-            sign: this.sign_tab,
-            diagnostic: this.diagnostic
-        }).then(response => {
-            console.log("SUCESS");
-        }, response => {
-            console.error(response)
+      var resource = this.$resource('case/insert');
+      resource.save({
+        doctor: localStorage.getItem('user_id'),
+        child: localStorage.getItem('detail_id'),
+        hour: this.taken_hour.hour,
+        minute: this.taken_hour.minute,
+        taken_place: this.taken_place,
+        alone: this.alone,
+        drugs: this.drug_tab,
+        sign: this.sign_tab,
+      }).then(response => {
+        // Redirect
+        this.$router.push({
+          name: 'Paracetamol'
         })
+      }, response => {
+        console.error(response)
+      })
     }
   }
 }
