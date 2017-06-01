@@ -7,7 +7,7 @@
       <form class="form-horizontal">
 
         <div class="form-group">
-          <label class="col-md-3 control-label">Heure de prise</label>
+          <label class="col-md-3 control-label">Heure passée</label>
           <div class="col-md-2">
             <input type="number" min="0" max="23" class="form-control input-md" required="true" v-model.number="taken_hour.hour">
           </div>
@@ -58,6 +58,7 @@
   <div class="row">
     <div class="col-md-12">
       <a class="btn-next" @click="submit">Next<i class="ion-arrow-right-a"></i></a>
+      <a class="btn-next" @click="submit">Medicament Inconnu</a> <!-- TODO :  -->
     </div>
   </div>
 
