@@ -58,7 +58,7 @@
   <div class="row">
     <div class="col-md-12">
       <a class="btn-next" @click="submit">Next<i class="ion-arrow-right-a"></i></a>
-      <a class="btn-next" @click="submit">Medicament Inconnu</a> <!-- TODO :  -->
+      <a class="btn-next" @click="toxifunc" data-toggle="modal" data-target="#toxidromeModal">Medicament Inconnu</a>
     </div>
   </div>
 
@@ -151,6 +151,42 @@
     </div>
   </div>
 
+  <!-- Modal Toxidrome -->
+  <!-- Modal -->
+  <div class="modal fade" id="toxidromeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div style="width: 48%;" class="modal-dialog" role="document">
+      <div style="width: 112%;" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Toxidromes Associés</h4>
+        </div>
+        <div class="modal-body">
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Toxidrome</th>
+                <th>Score</th>
+                <th>Selection</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="t in toxidrome">
+                <td>{{t.toxidrome}}</td>
+                <td>{{t.score}}</td>
+                <td><a @click="toxiselect(t.toxidrome)"><i class="ion-ios-bolt"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </template>
 
@@ -174,9 +210,12 @@ export default {
       sign: ['Coma', 'Convulsions', 'Myosis', 'Mydriase', 'Agitation', 'Hallucinations', 'Fièvre',
         'Myoclonies', 'Tremblements', 'Dysarthrie', 'Confusion', 'Paralysie', 'Céphalées',
         'Insomnie', 'Hyperréfléxie', 'Hypokaliémie', 'Palpitation', 'Bronchorrhée', 'Bronchospasme',
-        'Bloc auriculo-ventriculaire', 'QT long', 'Trouble de rythme', 'Insuffisance cardiaque', 'Vomissements', 'Diarrhées', 'Douleurs Abdominales', 'Constipation', 'Frisson', 'Rétention Urinaire', 'IRA', 'Insuffisance hépatique', 'Hypoglycémie', 'Hyperglycémie', 'Alcalose', 'Acidose', 'Hypokaliémie', 'Myosis', 'Somnolence', 'Ictère cutano muqueux'],
+        'Bloc auriculo-ventriculaire', 'QT long', 'Trouble de rythme', 'Insuffisance cardiaque', 'Vomissements', 'Diarrhées', 'Douleurs Abdominales', 'Constipation', 'Frisson', 'Rétention Urinaire', 'IRA', 'Insuffisance hépatique', 'Hypoglycémie',
+        'Hyperglycémie', 'Alcalose', 'Acidose', 'Hypokaliémie', 'Myosis', 'Somnolence', 'Ictère cutano muqueux'
+      ],
       select_sign: [],
       sign_tab: [],
+      toxidrome: [],
     }
   },
   created() {
@@ -244,11 +283,6 @@ export default {
         })
       }
 
-        var resource = this.$resource('toxidrome/get');
-        resource.save({
-            child: localStorage.getItem('detail_id'),
-            sign: this.sign_tab,
-        })
     },
     submit() {
       var resource = this.$resource('case/insert');
@@ -269,6 +303,29 @@ export default {
       }, response => {
         console.error(response)
       })
+    },
+    toxifunc() {
+      console.log("Toxidrome");
+      var resource = this.$resource('toxidrome/get');
+      resource.save({
+        child: localStorage.getItem('detail_id'),
+        sign: this.sign_tab,
+      }).then(response => {
+        this.toxidrome = response.body
+      }, response => {
+
+      })
+    },
+    toxiselect(toxidrome) {
+        var resource = this.$resource('toxidrome/compare');
+        resource.save({
+            toxidrome: toxidrome,
+            child: localStorage.getItem('detail_id')
+        }).then(response => {
+
+        }, response => {
+
+        })
     }
   }
 }

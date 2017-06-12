@@ -1,170 +1,43 @@
 <template>
 <div>
-    <div class="step">
-        <div class="txt-step">
-          <p><strong>Paracetamole : </strong>{{output.paracetamol}} mg</p>
-          <p><strong>Aspirine : </strong>{{output.aspirine}} mg</p>
-          <p><strong>Ibuprofene : </strong>{{output.ibuprofene}} mg</p>
-        </div>
-    </div>
   <div class="step">
     <div class="txt-step">
-      <p>Single or staggered overdose?</p>
-    </div>
-    <div class="btn-step">
-      <a>Single</a>
-      <a>staggered</a>
+      <p><span class="title-treat">Paracetamole : </span>{{output.paracetamol}} mg</p>
+      <p><span class="title-treat">Aspirine : </span>{{output.aspirine}} mg</p>
+      <p><span class="title-treat">Ibuprofene : </span>{{output.ibuprofene}} mg</p>
     </div>
   </div>
 
-  <div class="step" v-if="step.single || step.stagged">
-    <div class="txt-step">
-      <p>Risk box<br> Some patients may be at risk of liver damage from lower levels of plasma paracetamol.<br> 1 - Regular ethanol consumption in excess of 21 units/week in males, 14 units/week in females<br> 2 - Regular use of enzyme-inducing drugs (carbamazepine
-        phenytoin, phenobarbitone rifampacin)<br> 3 - Conditions causing glutathione depletion (malnutrition, HIV, eating disorders, cystic fibrosis)</p>
-    </div>
-    <div class="btn-step">
-      <a>Yes</a>
-      <a>No</a>
-    </div>
-  </div>
 
-  <div class="step" v-if="step.single && step.sigle_risk">
-    <div class="txt-step">
-      <p v-if="parac_dose < 75">Discharge the patient if sure of the dose ingested</p>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.single && !step.sigle_risk">
-    <div class="txt-step">
-      <p v-if="parac_dose < 150">Discharge the patient if sure of the dose ingested</p>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.single && step.stagged_risk">
-    <div class="txt-step">
-      <p v-if="parac_dose < 75">Discharge the patient if sure of the dose ingested</p>
-      <p v-else>Call National Poisons Information Service</p>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.single && !step.stagged_risk">
-    <div class="txt-step">
-      <p v-if="parac_dose < 150">Discharge the patient if sure of the dose ingested</p>
-    </div>
-    <div class="btn-step">
-      <a>Yes</a>
-      <a>No</a>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.single && step.stagged_risk_sup">
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine. See treatment box for doses</p>
-      <img src="../../../../static/img/parac/treatment.png">
-    </div>
-    <div class="txt-step">
-      <p>Take blood for baseline INR, LFTs, creatinine and venous bicarbonate (if bicarbonate abnormal then check arterial blood gases)</p>
-    </div>
-  </div>
-
-  <!-- BY TIME -->
-
-  <div class="step" v-if="step.two && input.parac_hours < 1">
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine. See treatment box for doses</p>
-      <img src="../../../../static/img/parac/treatment.png">
-    </div>
-    <div class="txt-step">
-      <p>Take blood for baseline INR, LFTs, creatinine and venous bicarbonate (if bicarbonate abnormal then check arterial blood gases)</p>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.two && input.parac_hours >= 1 && input.parac_hours < 4">
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine. See treatment box for doses</p>
-      <img src="../../../../static/img/parac/treatment.png">
-    </div>
-    <div class="txt-step">
-      <p>Take blood for baseline INR, LFTs, creatinine and venous bicarbonate (if bicarbonate abnormal then check arterial blood gases)</p>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.two && input.parac_hours >= 4 && input.parac_hours < 8">
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine. See treatment box for doses</p>
-      <img src="../../../../static/img/parac/treatment.png">
-    </div>
-    <div class="txt-step">
-      <p>Take blood for baseline INR, LFTs, creatinine and venous bicarbonate (if bicarbonate abnormal then check arterial blood gases)</p>
-    </div>
-    <div class="txt-step">
-      <p>Will level be available before 8 hours ?</p>
-    </div>
-    <div class="btn-step">
-      <a>Yes</a>
-      <a>No</a>
-    </div>
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine See treatment box for doses</p>
-    </div>
-    <div class="txt-step">
-      <p>Check paracetamol level result and plot on the treatment nomogram</p>
-      <img src="../../../../static/img/parac/level.png">
-    </div>
-  </div>
-
-  <div class="step" v-if="step.two && input.parac_hours >= 8 && input.parac_hours < 24">
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine. See treatment box for doses</p>
-      <img src="../../../../static/img/parac/treatment.png">
-    </div>
-    <div class="txt-step">
-      <p>Take blood for baseline INR, LFTs, creatinine and venous bicarbonate (if bicarbonate abnormal then check arterial blood gases)</p>
-    </div>
-    <div class="txt-step">
-      <p>Check paracetamol level result and plot on the treatment nomogram</p>
-      <img src="../../../../static/img/parac/level.png">
-    </div>
-    <div class="txt-step">
-      <p>Is the paracetamol level above the treatment line ?</p>
-    </div>
-    <div class="txt-step">
-      <p>Check INR, creatinine and venous bicarbonate results (if bicarbonate abnormal then check arterial blood gases)</p>
-    </div>
-    <div class="txt-step">
-      <p>Are the lab tests abnormal ?</p>
-    </div>
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine 11 38 39 (see treatment box for doses), if not already started. Call National Poisons Information Service</p>
-    </div>
-  </div>
-
-  <div class="step" v-if="step.two && input.parac_hours > 24">
-    <div class="txt-step">
-      <p>Start treatment with i.v. N-acetylcysteine. See treatment box for doses</p>
-      <img src="../../../../static/img/parac/treatment.png">
-    </div>
-    <div class="txt-step">
-      <p>Take blood for baseline INR, LFTs, creatinine and venous bicarbonate (if bicarbonate abnormal then check arterial blood gases)</p>
-      <p>Is the patient symptomatic or are the lab tests abnormal?</p>
-    </div>
-    <div class="btn-step">
-      <a>Yes</a>
-      <a>No</a>
-    </div>
+  <div class="treatment">
+    <h4>Paracetamol</h4>
+    <p><span class="title-treat">Diagnostic</span> : {{paracetamol.diag}}</p>
+    <p><span class="title-treat">Complementaire</span> : {{paracetamol.complementaire}}</p>
+    <p><span class="title-treat">Traitement</span> : {{paracetamol.treatment}}</p>
   </div>
 
   <div class="treatment">
-      <h4>Aspirine</h4>
-      <p>Diagnostic : {{aspirine.diag}}</p>
-      <p>Complementaire : {{aspirine.complementaire}}</p>
-      <p>Traitement : {{aspirine.treatment}}</p>
+    <h4>Aspirine</h4>
+    <p><span class="title-treat">Diagnostic</span> : {{aspirine.diag}}</p>
+    <p><span class="title-treat">Complementaire</span> : {{aspirine.complementaire}}</p>
+    <p><span class="title-treat">Traitement</span> : {{aspirine.treatment}}</p>
   </div>
 
   <div class="treatment">
-      <h4>Ibuprofene</h4>
-      <p>Diagnostic : {{ibuprofene.diag}}</p>
-      <p>Traitement : {{ibuprofene.treatment}}</p>
+    <h4>Ibuprofene</h4>
+    <p><span class="title-treat">Diagnostic</span> : {{ibuprofene.diag}}</p>
+    <p><span class="title-treat">Traitement</span> : {{ibuprofene.treatment}}</p>
+  </div>
+
+  <div style="text-align: center" v-show="!show_desaprove">
+    <a class="btn-approve" @click="approve">Approuver <i class="ion-thumbsup"></i></a>
+    <a class="btn-deapprove" @click="deapprove">Désapprouver <i class="ion-thumbsdown"></i></a>
+  </div>
+
+
+  <div class="row" style="text-align: center" v-show="show_desaprove">
+    <textarea name="name" rows="8" cols="80" v-model="comment" placeholder="Traitement proposé par le medecin"></textarea><br>
+    <a class="btn-approve" @click="send">Valider <i class="ion-android-done"></i></a>
   </div>
 
 </div>
@@ -175,24 +48,31 @@ export default {
 
   data() {
     return {
+      comment: '',
+      show_desaprove: false,
       child_id: localStorage.getItem('detail_id'), // TODO: or replace by child_id
       output: {
-          paracetamol: 0,
-          aspirine: 0,
-          ibuprofene: 0
+        paracetamol: 0,
+        aspirine: 0,
+        ibuprofene: 0
       },
       input: {
         parac_dose: localStorage.getItem('parac_dose'),
         parac_hours: localStorage.getItem('parac_hours'),
       },
       aspirine: {
-          complementaire: "",
-          diag: "",
-          treatment: ""
+        complementaire: "",
+        diag: "",
+        treatment: ""
+      },
+      paracetamol: {
+        complementaire: "",
+        diag: "",
+        treatment: ""
       },
       ibuprofene: {
-          diag: "",
-          treatment: ""
+        diag: "",
+        treatment: ""
       },
       step: {
         single: true,
@@ -210,34 +90,76 @@ export default {
   },
 
   mounted() {
-      var resource = this.$resource('expert/toxicity/');
+    var resource = this.$resource('expert/toxicity/');
+    resource.save({
+      child_id: this.child_id
+    }).then(response => {
+      console.log(response.body);
+      this.output.paracetamol = response.body.paracetamol
+      this.output.aspirine = response.body.aspirine
+      this.output.ibuprofene = response.body.ibuprofene
+
+      var resource = this.$resource('expert/toxicity/expert/');
       resource.save({
-          child_id: this.child_id
+        child_id: this.child_id,
+        aspirine: this.output.aspirine,
+        ibuprofene: this.output.ibuprofene,
+        paracetamol: this.output.paracetamol,
       }).then(response => {
-          console.log(response.body);
-          this.output.paracetamol = response.body.paracetamol
-          this.output.aspirine = response.body.aspirine
-          this.output.ibuprofene = response.body.ibuprofene
+        console.log(response.body);
+        this.aspirine.complementaire = response.body.aspirine.complementaire
+        this.aspirine.diag = response.body.aspirine.diag
+        this.aspirine.treatment = response.body.aspirine.treatment
 
-          var resource = this.$resource('expert/toxicity/expert/');
-          resource.save({
-              child_id: this.child_id,
-              aspirine: this.output.aspirine,
-              ibuprofene: this.output.ibuprofene,
-          }).then(response => {
-              console.log(response.body);
-              this.aspirine.complementaire = response.body.aspirine.complementaire
-              this.aspirine.diag = response.body.aspirine.diag
-              this.aspirine.treatment = response.body.aspirine.treatment
+        this.paracetamol.complementaire = response.body.paracetamol.complementaire
+        this.paracetamol.diag = response.body.paracetamol.diag
+        this.paracetamol.treatment = response.body.paracetamol.treatment
 
-              this.ibuprofene.diag = response.body.ibuprofene.diag
-              this.ibuprofene.treatment = response.body.ibuprofene.treatment
-          }, response => {
+        this.ibuprofene.diag = response.body.ibuprofene.diag
+        this.ibuprofene.treatment = response.body.ibuprofene.treatment
+      }, response => {
 
+      })
+    }, response => {
+
+    })
+  },
+  methods: {
+    approve() {
+      console.log("approve");
+      var resource = this.$resource('case/approve/');
+      resource.save({
+        id: this.child_id,
+        approve: true
+      }).then(response => {
+          this.$router.push({
+            name: 'Case'
           })
       }, response => {
 
       })
+    },
+    deapprove() {
+      console.log("deapprove");
+      this.show_desaprove = true
+
+    },
+    send() {
+      var resource = this.$resource('case/approve/');
+      resource.save({
+        id: this.child_id,
+        approve: false,
+        proposition: this.comment
+      }).then(response => {
+          if (response.body.success) {
+              this.$router.push({
+                name: 'Case'
+              })
+          }
+      }, response => {
+
+      })
+    }
   }
 }
 </script>
@@ -263,6 +185,59 @@ export default {
 .step a:hover,
 .step a:active {
     background-color: black;
+    color: white;
+}
+
+.treatment {
+    border: 4px solid #d35400;
+    border-radius: 4px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.treatment h4 {
+    text-align: center;
+    font-size: 150%;
+    color: #2c3e50;
+}
+
+.title-treat {
+    font-weight: bold;
+    color: #c0392b;
+}
+
+.btn-approve {
+    display: inline-block;
+    text-decoration: none !important;
+    color: #27ae60;
+    border: 3px solid #27ae60;
+    margin: 5px 30px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 150%;
+    padding: 10px;
+}
+
+.btn-approve:hover,
+.btn-approve:active {
+    background-color: #27ae60;
+    color: white;
+}
+
+.btn-deapprove {
+    display: inline-block;
+    text-decoration: none !important;
+    color: #e74c3c;
+    border: 3px solid #e74c3c;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 150%;
+    padding: 10px;
+}
+
+.btn-deapprove:hover,
+.btn-deapprove:active {
+    background-color: #e74c3c;
     color: white;
 }
 
