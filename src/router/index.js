@@ -18,6 +18,7 @@ import Drug from '@/components/admin/Drug'
 
 import Stable from '@/components/doctor/Stable'
 import Instable from '@/components/doctor/Instable'
+import Candidat from '@/components/doctor/Candidat'
 
 import Paracetamol from '@/components/doctor/expert/Paracetamol'
 
@@ -100,6 +101,11 @@ export default new Router({
               path: '/instable',
               name: 'Instable',
               component: Instable,
+          },
+          {
+              path: '/candidat',
+              name: 'Candidat',
+              component: Candidat,
           },
           {
               path: '/paracetamol',

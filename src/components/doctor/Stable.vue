@@ -174,7 +174,7 @@
               <tr v-for="t in toxidrome">
                 <td>{{t.toxidrome}}</td>
                 <td>{{t.score}}</td>
-                <td><a @click="toxiselect(t.toxidrome)"><i class="ion-ios-bolt"></i></a></td>
+                <td><a @click="toxiselect(t.toxidrome)" data-dismiss="modal"><i class="ion-ios-bolt"></i></a></td>
               </tr>
             </tbody>
           </table>
@@ -211,7 +211,7 @@ export default {
         'Myoclonies', 'Tremblements', 'Dysarthrie', 'Confusion', 'Paralysie', 'Céphalées',
         'Insomnie', 'Hyperréfléxie', 'Hypokaliémie', 'Palpitation', 'Bronchorrhée', 'Bronchospasme',
         'Bloc auriculo-ventriculaire', 'QT long', 'Trouble de rythme', 'Insuffisance cardiaque', 'Vomissements', 'Diarrhées', 'Douleurs Abdominales', 'Constipation', 'Frisson', 'Rétention Urinaire', 'IRA', 'Insuffisance hépatique', 'Hypoglycémie',
-        'Hyperglycémie', 'Alcalose', 'Acidose', 'Hypokaliémie', 'Myosis', 'Somnolence', 'Ictère cutano muqueux'
+        'Hyperglycémie', 'Alcalose', 'Acidose', 'Hypokaliémie', 'Somnolence', 'Ictère cutano muqueux'
       ],
       select_sign: [],
       sign_tab: [],
@@ -320,9 +320,13 @@ export default {
         var resource = this.$resource('toxidrome/compare');
         resource.save({
             toxidrome: toxidrome,
-            child: localStorage.getItem('detail_id')
+            child: localStorage.getItem('child_id')
         }).then(response => {
-
+            console.log(response.body[0].id);
+            localStorage.setItem('candidat_id', response.body[0].id)
+            this.$router.push({
+              name: 'Candidat'
+            })
         }, response => {
 
         })
